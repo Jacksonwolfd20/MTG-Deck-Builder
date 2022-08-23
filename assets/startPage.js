@@ -50,8 +50,11 @@ function cardInput(searchinput){
         .then(data => {
           //Collects the CardMarket ID
           cardmarketid = data.cardmarket_id
+          var cardRealName = data.name
           //Starts To Get The Price
           getCardPrice(cardmarketid);
+          //Sends Cards Real Name
+          console.log(cardRealName);
           //Test To see if the ID is called
           console.log(cardmarketid);
         })
