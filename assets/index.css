@@ -1,0 +1,13 @@
+body {
+    background-image: url(./mtgbackground.jpg);
+}
+
+#searchBox {
+    background-color: goldenrod;
+}
+
+#searchBar {
+    border-radius: 16px;
+    background-color: mediumturquoise;
+    border-color: black;
+}
