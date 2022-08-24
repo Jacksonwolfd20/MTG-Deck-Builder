@@ -39,34 +39,18 @@ searchbtn.addEventListener("click", function (){
     }
   );
   //coding card img finder
-function cardImgcreator(){
-  //Stores The URL
-  var cardcode = encodeURI(`https://api.scryfall.com/cards/named?fuzzy=${searchinput}`);
-    
-  fetch(cardcode, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      //Collects the CardMarket ID
-      cardmarketid = data.cardmarket_id
-      var cardRealName = data.name
+function cardImgcreator(cardarray){
+      var cardmarketid = cardarray.cardmarket_id
+      var cardRealName = cardarray.name
       //Starts To Get The Price
       getCardPrice(cardmarketid);
       //Sends Cards Real Name
       console.log(cardRealName);
       //Test To see if the ID is called
       console.log(cardmarketid);
-    })
-    .catch(error => {
-      alert('No card Img');
-    });
-}
+    }
+    
+
   //Gets card shop info
 function cardInput(searchinput){
     //Stores The URL
@@ -83,20 +67,21 @@ function cardInput(searchinput){
         })
         .then(data => {
           //Collects the CardMarket ID
-          cardmarketid = data.cardmarket_id
-          var cardRealName = data.name
+          var cardarray = data
+          var cardmarketid = cardarray.cardmarket_id
+          var cardRealName = cardarray.name
 
-          if (!data.name) {
+          if (!cardarray.name) {
             console.log('No results found!');
             resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
           } else {
             resultContentEl.textContent = '';
             //Fix It
-            //printCards(cardcode);
+            printCards(cardarray);
             //Adds Showing of Results 
           resultTextEl.textContent = (" " + cardRealName);
           //Starts To Get The Price
-          getCardPrice(cardmarketid);
+          getCardPrice(cardarray);
           //Sends Cards Real Name
           console.log(cardRealName);
           //Test To see if the ID is called
@@ -109,23 +94,12 @@ function cardInput(searchinput){
       return;
       }
 
-      function getCardPrice(cardmarketid) {
-        //Enters the card id when looking through the API
-        var CardCodeApi = encodeURI(`https://api.scryfall.com/cards/cardmarket/${cardmarketid}`);
-        fetch(CardCodeApi, {
-          method: 'GET', //GET is the default.
-          credentials: 'same-origin', // include, *same-origin, omit
-          redirect: 'follow', // manual, *follow, error
-        })
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (data) {
+      function getCardPrice(cardarray) {
             //Gathers the prices from the API 
-            cardPriceUsd = data.prices.usd
-            cardPriceUsdFoil = data.prices.usd_foil
-            cardPriceEuro = data.prices.eur
-            cardPriceEuroFoil = data.prices.eur_foil
+            cardPriceUsd = cardarray.prices.usd
+            cardPriceUsdFoil = cardarray.prices.usd_foil
+            cardPriceEuro = cardarray.prices.eur
+            cardPriceEuroFoil = cardarray.prices.eur_foil
             //Test the API
             //Seperates Prices Shown
             if(PriceType === true){
@@ -135,24 +109,13 @@ function cardInput(searchinput){
             console.log("Card price is € " + cardPriceEuro);
             console.log("Foil card price is € " + cardPriceEuroFoil);
             }
-          });
-        return;
-      }
+          };
 
      
-      function printCards(cardcode) {
-        console.log(cardcode);
+      function printCards(cardarray) {
 
-        fetch(cardcode, {
-            method: 'GET', //GET is the default.
-            credentials: 'same-origin', // include, *same-origin, omit
-            redirect: 'follow', // manual, *follow, error
-          })
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (data) {
-            // set up `<div>` to hold result content
+        console.log(cardarray);
+
         var resultCard = document.createElement('div');
         resultCard.classList.add('box');
       
@@ -161,26 +124,26 @@ function cardInput(searchinput){
         resultCard.append(resultBody);
       
         var titleEl = document.createElement('h3');
-        titleEl.textContent = data.name;
+        titleEl.textContent = cardarray.name;
       
         var bodyContentEl = document.createElement('p');
         bodyContentEl.innerHTML =
-          '<strong>Card Type:</strong> ' + data.type_line + '<br/>';
+          '<strong>Card Type:</strong> ' + cardarray.type_line + '<br/>';
             if (PriceType){
           bodyContentEl.innerHTML +=
-            '<strong>Card Price:</strong> ' + "$" + data.prices.usd + '<br/>';
+            '<strong>Card Price:</strong> ' + "$" + cardarray.prices.usd + "~" + '<br/>';
             bodyContentEl.innerHTML +=
-            '<strong>Card Foil Price:</strong> ' + "$" + data.prices.usd_foil + '<br/>';
+            '<strong>Card Foil Price:</strong> ' + "$" + cardarray.prices.usd_foil + "~" + '<br/>';
             }else{
                 bodyContentEl.innerHTML +=
-            '<strong>Card Price:</strong> ' + "€" + data.prices.eur + '<br/>';
+            '<strong>Card Price:</strong> ' + "€" + cardarray.prices.eur + "~" + '<br/>';
             bodyContentEl.innerHTML +=
-            '<strong>Card Foil Price:</strong> ' + "€" + data.prices.eur_foil + '<br/>';
+            '<strong>Card Foil Price:</strong> ' + "€" + cardarray.prices.eur_foil + "~" + '<br/>';
             }
       
-        if (data.oracle_text) {
+        if (cardarray.oracle_text) {
           bodyContentEl.innerHTML +=
-            '<strong>Card Text:</strong> ' + data.oracle_text + '<br/>';
+            '<strong>Card Text:</strong> ' + cardarray.oracle_text + '<br/>';
         } else {
           bodyContentEl.innerHTML +=
             '<strong>Card Text:</strong> There is none.';
@@ -193,8 +156,8 @@ function cardInput(searchinput){
         resultBody.append(titleEl, bodyContentEl, linkButtonEl);
       
         resultContentEl.append(resultCard);
-        });
+        }
         
-      }
+      
       
       
