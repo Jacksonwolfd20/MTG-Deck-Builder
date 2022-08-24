@@ -45,33 +45,11 @@ searchbtn.addEventListener("click", function (){
   //coding card img finder
 function cardImgcreator(cardarray){
   var cardRealName = cardarray.name
-
-  var cardcode = encodeURI(`https://api.magicthegathering.io/v1/cards`);
-  fetch(cardcode, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-    .then(response => {
-      mtg.card.find(386616);
-      return response.json();
-    })
-    .then(data => {
-      var cardinfo = data
-      console.log(cardinfo);
-      var cardmarketid = cardarray.cardmarket_id
+      var cardImgTest = cardarray.image_uris.border_crop
       //Starts To Get The Price
-      getCardPrice(cardmarketid);
-      //Sends Cards Real Name
       console.log(cardRealName);
       //Test To see if the ID is called
-      console.log(cardmarketid);
-    })
-    .catch(error => {
-      alert('Card entered is invalid');
-    });
-  return;
+      console.log(cardImgTest);
     }
     
 
@@ -110,6 +88,8 @@ function cardInput(searchinput){
           console.log(cardRealName);
           //Test To see if the ID is called
           console.log(cardmarketid);
+            //img creator
+          cardImgcreator(cardarray);
 
         }
         })
@@ -147,9 +127,21 @@ function cardInput(searchinput){
         var resultBody = document.createElement('div');
         resultBody.classList.add('box');
         resultCard.append(resultBody);
-      
+        
+        //Prints the cards title
         var titleEl = document.createElement('h3');
         titleEl.textContent = cardarray.name;
+
+        
+
+        //Prints the img to the search
+        var imgFrame = document.querySelector('#img');
+        var img = document.createElement("IMG");
+        img.src = cardarray.image_uris.border_crop;
+        img.width = "250";
+        img.height = "100";
+        imgFrame.appendChild(img);
+        
       
         var bodyContentEl = document.createElement('p');
         bodyContentEl.innerHTML =
