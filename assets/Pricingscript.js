@@ -36,18 +36,42 @@ searchbtn.addEventListener("click", function (){
        PriceType = false
     }
       }
+      
     }
   );
+
+
+  
   //coding card img finder
 function cardImgcreator(cardarray){
+  var cardRealName = cardarray.name
+
+  var cardcode = encodeURI(`https://api.magicthegathering.io/v1/cards`);
+  fetch(cardcode, {
+    method: 'GET', //GET is the default.
+    credentials: 'same-origin', // include, *same-origin, omit
+    redirect: 'follow', // manual, *follow, error
+    cache: 'reload'  // Refresh the cache
+  })
+    .then(response => {
+      mtg.card.find(386616);
+      return response.json();
+    })
+    .then(data => {
+      var cardinfo = data
+      console.log(cardinfo);
       var cardmarketid = cardarray.cardmarket_id
-      var cardRealName = cardarray.name
       //Starts To Get The Price
       getCardPrice(cardmarketid);
       //Sends Cards Real Name
       console.log(cardRealName);
       //Test To see if the ID is called
       console.log(cardmarketid);
+    })
+    .catch(error => {
+      alert('Card entered is invalid');
+    });
+  return;
     }
     
 
@@ -86,6 +110,7 @@ function cardInput(searchinput){
           console.log(cardRealName);
           //Test To see if the ID is called
           console.log(cardmarketid);
+
         }
         })
         .catch(error => {
