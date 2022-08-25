@@ -39,7 +39,7 @@
         </div>
       </nav>
       <!--Bar for the left of the screen-->
-      <form class="box is-2 column height-100 ">
+      <form class="box is-2 column height-100 position-fixed">
         <div class="field bulma-center-mixin">
           <label class="label">Card Of Your Choice</label>
           <div class="control">
@@ -74,8 +74,9 @@
 <!--Will be where cards ar displayed-->
 <div class="box column columns is-offset-one-fifth is-three-quarters ">
     <h2 >Showing results for: <span id="result-text"></span></h2>
-    <div class="column is-5" id="result-content"></div>
-    <div class="column is-5" id="img"></div>
+
+    <div id="result-content" class="column"></div>
+    </div>
   </div>
 
       <script src="./assets/Pricingscript.js"></script>
