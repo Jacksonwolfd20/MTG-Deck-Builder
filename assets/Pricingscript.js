@@ -139,7 +139,7 @@ function printCards(cardarray) {
   resultCard.classList.add('box');
 
   var resultBody = document.createElement('div');
-  resultBody.classList.add("column");
+  resultBody.classList.add( "column");
   resultCard.append(resultBody);
   //Prints the cards title
   var titleEl = document.createElement('h3');
