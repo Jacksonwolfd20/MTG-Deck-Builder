@@ -16,14 +16,22 @@
     <header>
         <h1 class="title">Deck Builder</h1>
         <!-- links back to index.html -->
-        <h2 class="subtitle"><a href="#">HOME</a></h2>
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <a href="index.html">Home</a>
+            </div>
+            <!-- links to Pricing.html -->
+            <div class="navbar-end">
+                <a href="Pricing.html">Pricing</a>
+            </div>
+        </div>
     </header>
 
     <!-- Search Bar Structure -->
     <form class="box" id="search-box">
         <label class="label">Search for a card, and add it to your deck!</label>
         <div class="field">
-            <input class="input" type="text" placeholder="e.g. Krenko, Mob Boss" id="searchBar">
+            <input class="input" type="text" placeholder="e.g. Krenko, Mob Boss" id="search-bar">
         </div>
 
         <button class="button is-success" id="search-button">Search</button>
