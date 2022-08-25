@@ -18,6 +18,8 @@ searchBtn.addEventListener('click', function() {
         localStorage.setItem('usdCheck', usdCheck);
         localStorage.setItem('eurCheck', eurCheck);
 
+        window.location.replace('./assets/html/deckBuilder');
+        
     }
 
 });
