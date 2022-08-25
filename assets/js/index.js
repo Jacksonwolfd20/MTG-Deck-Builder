@@ -1,4 +1,5 @@
-var searchBtn = document.querySelector("#searchButton");
+var searchBtn = document.querySelector('#searchButton');
+var modalCloseBtn = document.querySelector('#modalClose');
 
 searchBtn.addEventListener('click', function() {
 
@@ -8,7 +9,7 @@ searchBtn.addEventListener('click', function() {
 
     if (searchInput === '' || searchInput === undefined) {
 
-        alert('You must enter a card name')
+        modal.classList.add('is-active');
 
     } else {
 
@@ -19,7 +20,14 @@ searchBtn.addEventListener('click', function() {
         localStorage.setItem('eurCheck', eurCheck);
 
         window.location.replace('./assets/html/deckBuilder');
-        
+
     }
+
+});
+
+// modal
+modalCloseBtn.addEventListener('click', function() {
+
+    modal.classList.remove('is-active');
 
 });
