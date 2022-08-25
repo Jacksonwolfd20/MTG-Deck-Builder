@@ -48,7 +48,7 @@ searchbtn.addEventListener("click", function () {
 function cardImgcreatorTester(cardarray) {
   //Stores card Name
   var cardRealName = cardarray.name
-  //Stores the img to be used later on
+//Stores the img to be used later on
   var cardImgTest = cardarray.image_uris.border_crop
   //Starts To Get The Price
   console.log(cardRealName);
@@ -228,6 +228,9 @@ function printCards(cardarray) {
             }
             //allCardNames();
 
+            
+      
+      
             
       
       
