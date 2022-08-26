@@ -39,6 +39,7 @@ searchbtn.addEventListener("click", function () {
     searchinput = additionSymbolAdd(searchinput);
     //Test what is going to the api
     console.log(searchinput);
+    cardfinish(searchinput);
     //Gets card shop info
     cardInput(searchinput);
     //Checks only one checkmark to determine the value of the other
@@ -54,6 +55,36 @@ searchbtn.addEventListener("click", function () {
 }
 );
 
+
+
+function cardfinish(searchinput){
+  var cardcode = encodeURI(`https://api.scryfall.com/cards/named?fuzzy=${searchinput}`);
+  //Fetches the Api that was set into the variable above
+  fetch(cardcode, {
+    method: 'GET', //GET is the default.
+    credentials: 'same-origin', // include, *same-origin, omit
+    redirect: 'follow', // manual, *follow, error
+    cache: 'reload'  // Refresh the cache
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      //Stores the data to be used later on
+      var otherCardsNames = data.all_parts
+
+      console.log(otherCardsNames.name);
+      
+      otherCardsNames.name = additionSymbolAdd(otherCardsNames.name);
+
+
+      
+      for (var i = 0; i < otherCardsNames.length; i++) {
+        console.log(otherCardsNames[i].name);
+        }
+      
+    })
+}
 
 
 //coding card img finder
