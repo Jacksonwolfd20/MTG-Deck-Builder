@@ -11,6 +11,8 @@ var closeButton = document.querySelector("#closeButton");
 var alertMessege = document.querySelector("#alertMessege");
 
 let cardNamesAuto = []
+
+let cardOptions = []
 //finished
 closeButton.addEventListener("click", function () {
     modal.classList.remove("is-active");
@@ -63,6 +65,8 @@ function cardInput(searchinput) {
         return response.json();
       })
       .then(data => {
+
+        if()
         //Stores the data to be used later on
         var cardarray = data
         //Checks the card name
