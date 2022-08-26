@@ -6,11 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./assets/index.css" />
+    <link rel="stylesheet" href="./assets/css/index.css" />
+    <script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.js'></script>
     <title>Magic The Gathering Deck Builder</title>
-</head>
+</head> 
 
 <body>
+
+    <header>
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="https://magic.wizards.com/en">
+                <img src="./assets/images/mtglogo.jpg" width="112" height="28">
+              </a>
+              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </a>
+            </div>
+          
+            <div id="navbarBasicExample" class="navbar-menu">
+              <div class="navbar-start">
+                <a class="navbar-item" href="https://magic.wizards.com/en/how-to-play">
+                  How to Play
+                </a>
+          
+                <a class="navbar-item" href="https://media.wizards.com/2022/downloads/MagicCompRules%2020220708.pdf">
+                  Rulebook pdf
+                </a>
+              </div>
+          
+              <div class="navbar-end">
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                      Contributors
+                    </a>
+            
+                    <div class="navbar-dropdown">
+                      <a class="navbar-item" href="https://github.com/Jacksonwolfd20">
+                        Junior Cabriales Rodriguez
+                      </a>
+                      <a class="navbar-item" href="https://github.com/zdedm">
+                        Zachary Edmonson
+                      </a>
+                      <a class="navbar-item" href="https://github.com/mcfoote">
+                        Mitchell Foote
+                      </a>
+                      <a class="navbar-item" href="https://github.com/MWells012">
+                        Michaela Wells
+                      </a>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </nav>
+    </header>
+
     <form class="box is-three-fifths column is-vcentered is-offset-one-fifth" id="searchBox">
         <div class="container">
             <div class="field">
@@ -39,6 +91,37 @@
     
         </div>
     </form>
+
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+              <figure class="image is-570x427">
+                <img src="./assets/images/mtgdecks.jpg" alt="MTG deck boxes">
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong>Welcome Planeswalker to Magic The Gathering Deck Builder!</strong>
+                  <br>
+                  With our site you can search cards and place them in a deck, and when you think you have the perfect prospective deck built you can price out what the current going market 
+                  price for that deck would be in $USD or €EUR.
+                </p>
+              </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- modal -->
+    <div class="modal" id="modalBox">
+        <div class="modal-background"></div>
+        <div class="modal-content has-background-white py-5 px-5">
+            <p>You must enter a cards name</p>
+        </div>
+        <button class="modal-close is-large" aria-label="close" id="modalClose"></button>
+    </div>
+
+    <script src="./assets/js/index.js"></script>
 </body>
 
 </html>
