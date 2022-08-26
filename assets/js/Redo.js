@@ -69,19 +69,17 @@ function additionSymbolAdd(myString) {
         //Stores the data to be used later on
         var otherCardsNames = data.all_parts
   
-        console.log(otherCardsNames);
-        
-        otherCardsNames = additionSymbolAdd(otherCardsNames.name);
-
-
+        console.log(otherCardsNames.name);
+  
         
         for (var i = 0; i < otherCardsNames.length; i++) {
           console.log(otherCardsNames[i].name);
+          cardInput(otherCardsNames[i].name)
           }
         
       })
-  }
-
+  
+    }
   
 
   //Gets card shop info
