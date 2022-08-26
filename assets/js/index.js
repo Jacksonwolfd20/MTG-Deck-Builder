@@ -1,5 +1,6 @@
 var searchBtn = document.querySelector('#searchButton');
 var modalCloseBtn = document.querySelector('#modalClose');
+var modal = document.querySelector('#modalBox');
 
 searchBtn.addEventListener('click', function() {
 
@@ -16,8 +17,8 @@ searchBtn.addEventListener('click', function() {
         searchInput = searchInput.replace(/\s/g, '+');
 
         localStorage.setItem('indexSearch', searchInput);
-        localStorage.setItem('usdCheck', usdCheck);
-        localStorage.setItem('eurCheck', eurCheck);
+        localStorage.setItem('indexUsdCheck', usdCheck);
+        localStorage.setItem('indexEurCheck', eurCheck);
 
         window.location.replace('./assets/html/deckBuilder');
 
