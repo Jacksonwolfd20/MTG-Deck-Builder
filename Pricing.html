@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Importing my CSS and Bulma-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="./assets/Pricingstyle.css" />
+    <title>Magic The Gathering Deck</title>
+</head>
+
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <!--Add Image for Navbar-->
+          <a class="navbar-item" href="">
+            <img src="" width="112" height="28">
+          </a>
+      
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      <!--Navbar Start and DeckList-->
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item">
+              Start
+            </a>
+            <a class="navbar-item">
+                Deck List
+              </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!--Bar for the left of the screen-->
+      <form class="box is-2 column height-100 position-fixed">
+        <div class="field bulma-center-mixin">
+          <label class="label">Card Of Your Choice</label>
+          <div class="control">
+            <!--This will be the search feature-->
+            <input class="input" id="search-input" type="card" placeholder="e.g. Ancient Gold Dragon">
+          </div>
+        </div>
+
+        <br />
+
+        <div class="control">
+            <label class="radio">
+              <input type="radio" name="foobar" id="UsdCheck" checked>
+              USD$
+            </label>
+            <label class="radio">
+              <input type="radio" name="foobar" id="EuroCheck">
+              EURO€
+            </label>
+          </div>
+
+          <br />
+      
+        <button id="searchbutton" class="button  custom-color" >Search</button>
+
+        
+
+      </form>
+
+      
+
+<!--Will be where cards ar displayed-->
+<div class="box column  is-offset-one-fifth is-three-quarters ">
+    <h2 >Showing results for: <span id="result-text"></span></h2>
+      
+    <div id="result-content" class="column"></div>
+    </div>
+  
+
+      <script src="./assets/Pricingscript.js"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+</body>
