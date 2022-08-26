@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--Importing my CSS and Bulma-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="./assets/Pricingstyle.css" />
     <title>Magic The Gathering Deck</title>
 </head>
@@ -73,14 +74,23 @@
 
 <!--Will be where cards ar displayed-->
 <div class="box column  is-offset-one-fifth is-three-quarters ">
+  <div id="modalAlert" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content has-background-white py-5 px-5">
+      <p id="alertMessege"></p>
+    </div>
+    <button id="closeButton" class="modal-close is-large" aria-label="close"></button>
+  </div>
+  
     <h2 >Showing results for: <span id="result-text"></span></h2>
       
     <div id="result-content" class="column"></div>
     </div>
   
 
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
       <script src="./assets/Pricingscript.js"></script>
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
 </body>

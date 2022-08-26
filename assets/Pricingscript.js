@@ -5,7 +5,13 @@ var PriceType = true
 var resultTextEl = document.querySelector('#result-text');
 var resultContentEl = document.querySelector('#result-content');
 
-var cardImg = document.querySelector("#cardImg")
+var cardImg = document.querySelector("#cardImg");
+
+var modal = document.querySelector("#modalAlert");
+var closeButton = document.querySelector("#closeButton");
+var alertMessege = document.querySelector("#alertMessege")
+
+let cardNamesAuto = [];
 
 //work in progress
 //var cardNamesAuto = 0
@@ -15,13 +21,19 @@ function additionSymbolAdd(myString) {
   return myString.replace(/\s/g, "+");
 }
 
+closeButton.addEventListener("click", function () {
+  modal.classList.remove("is-active");
+})
+
 searchbtn.addEventListener("click", function () {
   event.preventDefault();
   // Get the card entereed
   var searchinput = $("#search-input").val().trim();
+  console.log(searchinput);
   //Verify a Card Name was entered
   if (searchinput === "" || searchinput == "undefined") {
-    alert("Please enter a card")
+    modal.classList.add("is-active");
+    alertMessege.textContent = ("Sorry The Card Either Cant Be Found Or It Doesnt Exist Please Try Again")
   } else {
     // Switches the spaces with + symbol
     searchinput = additionSymbolAdd(searchinput);
@@ -43,19 +55,19 @@ searchbtn.addEventListener("click", function () {
 );
 
 
-  
+
 //coding card img finder
-function cardImgcreatorTester(cardarray) {
+function cardImgcreator(cardarray) {
   //Stores card Name
   var cardRealName = cardarray.name
-//Stores the img to be used later on
+  //Stores the img to be used later on
   var cardImgTest = cardarray.image_uris.border_crop
   //Starts To Get The Price
   console.log(cardRealName);
   //Test To see if the ID is called
   console.log(cardImgTest);
 }
-    
+
 
 //Gets card shop info
 function cardInput(searchinput) {
@@ -107,27 +119,48 @@ function cardInput(searchinput) {
 
       }
     })
-   // .catch(error => {
-      //alert('Card entered is invalid');
-   // });
+  // .catch(error => {
+  //alert('Card entered is invalid');
+  // });
   return;
 }
 
 function getCardPrice(cardarray) {
-  //Gathers the prices from the API 
+  //Gathers the prices from the API  
   cardPriceUsd = cardarray.prices.usd
   cardPriceUsdFoil = cardarray.prices.usd_foil
   cardPriceEuro = cardarray.prices.eur
   cardPriceEuroFoil = cardarray.prices.eur_foil
-  //Test the API
-  //Seperates Prices Shown
-  if (PriceType === true) {
+
+  if(cardPriceUsd && cardPriceUsdFoil === null){
+    console.log("Normal card price is unavalible");
+    console.log("Foil card price is unavalible");
+  }else if(cardPriceUsd === true && cardPriceUsdFoil === null){
+    console.log("Card price is $ " + cardPriceUsd);
+    console.log("Foil card price is unavalible");
+  }else if(cardPriceUsd === null && cardPriceUsdFoil === true){
+    console.log("Normal card price is unavalible");
+    console.log("Foil card price is $ " + cardPriceUsdFoil);
+  }else{
     console.log("Card price is $ " + cardPriceUsd);
     console.log("Foil card price is $ " + cardPriceUsdFoil);
-  } else {
-    console.log("Card price is € " + cardPriceEuro);
-    console.log("Foil card price is € " + cardPriceEuroFoil);
   }
+
+  if(cardPriceEuro && cardPriceEuroFoil === null){
+    console.log("Normal card price is unavalible");
+    console.log("Foil card price is unavalible");
+  }else if(cardPriceEuro === true && cardPriceEuroFoil === null){
+    console.log("Card price is $ " + cardPriceEuro);
+    console.log("Foil card price is unavalible");
+  }else if(cardPriceEuro === null && cardPriceEuroFoil === true){
+    console.log("Normal card price is unavalible");
+    console.log("Foil card price is $ " + cardPriceEuroFoil);
+  }else{
+    console.log("Card price is $ " + cardPriceEuro);
+    console.log("Foil card price is $ " + cardPriceEuroFoil);
+  }
+  
+  
 };
 
 //function to print all the info to the screen
@@ -139,12 +172,12 @@ function printCards(cardarray) {
   resultCard.classList.add('box');
 
   var resultBody = document.createElement('div');
-  resultBody.classList.add( "column");
+  resultBody.classList.add("column");
   resultCard.append(resultBody);
   //Prints the cards title
   var titleEl = document.createElement('h3');
   titleEl.classList.add("title");
-  
+
   titleEl.textContent = cardarray.name;
 
 
@@ -172,13 +205,13 @@ function printCards(cardarray) {
       '<strong>Card Text:</strong> There is none.';
   }
 
-   //Prints the img to the search
+  //Prints the img to the search
   var img = document.createElement("IMG");
   img.classList.add("column", "imgLeft");
   img.src = cardarray.image_uris.border_crop;
   img.width = "250";
   img.height = "100";
-  
+
 
   var linkButtonEl = document.createElement('a');
   linkButtonEl.textContent = 'Add To Deck List';
@@ -191,46 +224,53 @@ function printCards(cardarray) {
 
 
 
-      //Work in progress--
-        function allCardNames(){
-          //Stores The URL
-          var cardcodename = encodeURI(`https://api.scryfall.com/catalog/card-names`);
-          
-            fetch(cardcodename, {
-              method: 'GET', //GET is the default.
-              credentials: 'same-origin', // include, *same-origin, omit
-              redirect: 'follow', // manual, *follow, error
-              cache: 'reload'  // Refresh the cache
-            })
-              .then(response => {
-                return response.json();
-              })
-              .then(data => {
-                //Stores the data to be used later on
-               var cardNamesAuto = data
+//Work in progress--
+function allCardNames() {
+  //Stores The URL
+  var cardcodename = encodeURI(`https://api.scryfall.com/catalog/card-names`);
 
-                console.log(cardNamesAuto);
-              })
-              //catch's error
-           //   .catch(error => {
-           //     alert('allCardNames failed');
-           //   });
+  fetch(cardcodename, {
+    method: 'GET', //GET is the default.
+    credentials: 'same-origin', // include, *same-origin, omit
+    redirect: 'follow', // manual, *follow, error
+    cache: 'reload'  // Refresh the cache
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      //Stores the data to be used later on
+     cardNamesAuto = data.data
+     $('#search-input').autocomplete({
+      maxResults: 10,
+      source: function(request, response) {
+        var results = $.ui.autocomplete.filter(cardNamesAuto, request.term);
 
-           $(function () {
-              var cardNames = [
-                cardNamesAuto
-              ];
-              $('#search-input').autocomplete({
-                source: cardNames,
-              });
-            });
-            return;
-            }
-            //allCardNames();
+        response(results.slice(0, 10));
+    }
+     });
 
-            
       
-      
-            
-      
-      
+    })
+  //catch's error
+  //   .catch(error => {
+  //     alert('allCardNames failed');
+  //   });
+  
+  return;
+}
+
+
+allCardNames()
+
+
+
+
+
+
+
+
+
+
+
