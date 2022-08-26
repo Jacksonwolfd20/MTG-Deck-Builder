@@ -1,7 +1,11 @@
 body {
     background-image: url(../images/mtgbackground.jpg);
+    padding-bottom: 100%;
 }
 
+.navbar, .navbar-dropdown {
+    background-color: rgb(97, 73, 65);
+}
 #searchBox {
     background-color: rgb(78,59,52);
 }
@@ -16,6 +20,6 @@ body {
     background-color: rgb(241, 173, 100);
 }
 
-label {
+label, .navbar-link, .navbar-item {
     color: #fffdd0;
 }
