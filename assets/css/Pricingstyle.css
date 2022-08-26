@@ -1,3 +1,6 @@
+html {
+    background-color: rgb(202, 202, 202);
+}
 .height-100{
     min-height: 100vh;
     float: left;
@@ -10,11 +13,6 @@
     font-size: larger;
 }
 
-.custom-color{
-    background-color: purple;
-    color: white;
-}
-
 .imgLeft{
     
     margin: 0;
@@ -24,4 +22,21 @@
 
 .position-fixed{
     position: fixed;
+}
+
+#searchButton {
+    background-color: rgb(241, 173, 100);
+}
+
+.box {
+    background-color: rgb(97, 73, 65);
+    color: #fffdd0;
+}
+
+.label, .navbar-item {
+    color: #fffdd0;
+}
+
+.navbar, .navbar-item {
+    background-color: rgb(78,59,52);
 }
