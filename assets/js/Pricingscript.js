@@ -56,6 +56,8 @@ searchbtn.addEventListener("click", function () {
 
 
 
+
+
 //coding card img finder
 function cardImgcreator(cardarray) {
   //Stores card Name

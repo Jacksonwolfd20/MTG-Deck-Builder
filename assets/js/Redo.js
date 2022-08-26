@@ -34,6 +34,9 @@ searchbtn.addEventListener("click", function () {
       cardInput(searchinput);
       //Checks only one checkmark to determine the value of the other
       var checkMark = document.getElementById('UsdCheck');
+
+      cardfinish(searchinput);
+
       //Checks Checkmarks
       if (checkMark.checked) {
         PriceType = true
@@ -49,6 +52,35 @@ searchbtn.addEventListener("click", function () {
 function additionSymbolAdd(myString) {
     return myString.replace(/\s/g, "+");
   }
+
+  function cardfinish(searchinput){
+    var cardcode = encodeURI(`https://api.scryfall.com/cards/named?fuzzy=${searchinput}`);
+    //Fetches the Api that was set into the variable above
+    fetch(cardcode, {
+      method: 'GET', //GET is the default.
+      credentials: 'same-origin', // include, *same-origin, omit
+      redirect: 'follow', // manual, *follow, error
+      cache: 'reload'  // Refresh the cache
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        //Stores the data to be used later on
+        var otherCardsNames = data.all_parts
+  
+        console.log(otherCardsNames.name);
+  
+        
+        for (var i = 0; i < otherCardsNames.length; i++) {
+          console.log(otherCardsNames[i].name);
+          cardInput(otherCardsNames[i].name)
+          }
+        
+      })
+  
+    }
+  
 
   //Gets card shop info
 function cardInput(searchinput) {
@@ -66,7 +98,7 @@ function cardInput(searchinput) {
       })
       .then(data => {
 
-        if()
+        
         //Stores the data to be used later on
         var cardarray = data
         //Checks the card name
