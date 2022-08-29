@@ -9,7 +9,7 @@
     <!-- importing Bulma -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <!-- css goes here -->
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../css/deck-builder.css">
   </head>
 
   <body>
@@ -62,7 +62,7 @@
 
             <!----------- <p> AND <button> SHOULD BE DISPLAYED INLINE ----------->
             <!-- displays card price -->
-            <p class="content" id="pricetag">$0.00</p>
+            <p class="content" id="card-cost">$0.00</p>
             <!-- adds one copy of the currently selected card to the decklist -->
             <button class="button is-success" id="add-button">Add Card</button>
             <!------------------------------------------------------------------->
@@ -72,11 +72,14 @@
         <div class="column is-3 is-offset-2">
             <h2 class="title">Deck List</h2>
             <ul id="deck-list">
+                <li>test1</li>
+                <li>test2</li>
+                <li>test3</li>
             <ul>
         </div>
     </div>
 
     <!-- deck-builder.js is empty for now -->
-	<script src="./assets/deck-builder.js"></script>
+	<script src="../js/deck-builder.js"></script>
   </body>
 </html>
