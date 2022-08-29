@@ -12,7 +12,7 @@ searchBtn.addEventListener('click', function() {
 
     //check for appropriate input fire warning modal if not.
     if (searchInput === '' || searchInput === undefined) {
-
+        event.preventDefault();
         modal.classList.add('is-active');
 
     } else {
