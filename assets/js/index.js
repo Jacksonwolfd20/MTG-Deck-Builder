@@ -2,6 +2,7 @@
 var searchBtn = document.querySelector('#searchButton');
 var modal = document.querySelector('#modalBox');
 var modalCloseBtn = document.querySelector('#modalClose');
+var searchField = document.querySelector('#searchBar');
 
 //Search button functionality
 searchBtn.addEventListener('click', function() {
@@ -88,4 +89,7 @@ function cardNameSuggestions() {
 
 }
 
-cardNameSuggestions();
+var today = (moment().format("MMMM D, YYYY"))
+$("#date").text(today);
+
+searchField.addEventListener('click', cardNameSuggestions());
