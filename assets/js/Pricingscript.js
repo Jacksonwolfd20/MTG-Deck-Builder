@@ -1,6 +1,8 @@
 // Stores Search button
 var searchbtn = document.querySelector("#searchbutton");
 var PriceType = true
+//Search button array
+searchbtnmain = document.querySelector("#searchButton")
 
 var resultTextEl = document.querySelector('#result-text');
 var resultContentEl = document.querySelector('#result-content');
@@ -11,10 +13,28 @@ var modal = document.querySelector("#modalAlert");
 var closeButton = document.querySelector("#closeButton");
 var alertMessege = document.querySelector("#alertMessege")
 
+var displayPriceUsd = (" ")
+var displayPriceUsdFoil = (" ")
+var displayPriceEuro = (" ")
+var displayPriceEuroFoil = (" ")
+
 let cardNamesAuto = [];
 
-//work in progress
-//var cardNamesAuto = 0
+
+// Pulls from local storage to display the first card
+function firstSearch(){
+  //localStorage.getItem('indexSearch', searchInput);
+  //localStorage.getItem('indexUsdCheck', usdCheck);
+  //localStorage.getItem('indexEurCheck', eurCheck);
+
+  var searchinput = localStorage.getItem('indexSearch')
+
+  //console.log(localStorage.getItem('indexSearch', searchInput));
+
+  cardInput(searchinput);
+}
+
+firstSearch()
 
 // Switches the spaces with + symbol
 function additionSymbolAdd(myString) {
@@ -25,6 +45,10 @@ closeButton.addEventListener("click", function () {
   modal.classList.remove("is-active");
 })
 
+
+
+
+//adds search functionality
 searchbtn.addEventListener("click", function () {
   event.preventDefault();
   // Get the card entereed
@@ -32,7 +56,7 @@ searchbtn.addEventListener("click", function () {
   console.log(searchinput);
   //Verify a Card Name was entered
   if (searchinput === "" || searchinput == "undefined") {
-    modal.classList.add("is-active");
+    modal.classList.add('is-active');
     alertMessege.textContent = ("Sorry The Card Either Cant Be Found Or It Doesnt Exist Please Try Again")
   } else {
     // Switches the spaces with + symbol
@@ -42,9 +66,9 @@ searchbtn.addEventListener("click", function () {
     //Gets card shop info
     cardInput(searchinput);
     //Checks only one checkmark to determine the value of the other
-    var checkMark = document.getElementById('UsdCheck');
+    var checkMarkMain = document.getElementById('UsdCheck');
     //Checks Checkmarks
-    if (checkMark.checked) {
+    if (checkMarkMain.checked) {
       PriceType = true
     } else {
       PriceType = false
@@ -53,9 +77,6 @@ searchbtn.addEventListener("click", function () {
 
 }
 );
-
-
-
 
 
 //coding card img finder
@@ -99,19 +120,14 @@ function cardInput(searchinput) {
       } else {
         resultContentEl.textContent = '';
 
+        //Starts To Get The Price
+        getCardPrice(cardarray);
+
         //Prints cards
         printCards(cardarray);
 
-        // Work in Progress
-        //  for (var i = 0; i < otherCardsNames.length; i++) {
-        // cardInput(otherCardsNames[i]);
-        // }
-
-
         //Adds Showing of Results 
         resultTextEl.textContent = (" " + cardRealName);
-        //Starts To Get The Price
-        getCardPrice(cardarray);
         //Sends Cards Real Name
         console.log(cardRealName);
         //Test To see if the ID is called
@@ -121,9 +137,9 @@ function cardInput(searchinput) {
 
       }
     })
-  // .catch(error => {
-  //alert('Card entered is invalid');
-  // });
+   .catch(error => {
+  alert('Card entered is invalid');
+   });
   return;
 }
 
@@ -133,33 +149,49 @@ function getCardPrice(cardarray) {
   cardPriceUsdFoil = cardarray.prices.usd_foil
   cardPriceEuro = cardarray.prices.eur
   cardPriceEuroFoil = cardarray.prices.eur_foil
-
-  if(cardPriceUsd && cardPriceUsdFoil === null){
+//testing and pplying definitions to be used later
+  if(cardPriceUsd === null && cardPriceUsdFoil === null){
     console.log("Normal card price is unavalible");
     console.log("Foil card price is unavalible");
-  }else if(cardPriceUsd === true && cardPriceUsdFoil === null){
-    console.log("Card price is $ " + cardPriceUsd);
+    displayPriceUsd = ("Normal card price is unavalible")
+    displayPriceUsdFoil = ("Foil card price is unavalible")
+  }else if(cardPriceUsd && cardPriceUsdFoil === null){
+    console.log(" $ " + cardPriceUsd + "~");
     console.log("Foil card price is unavalible");
-  }else if(cardPriceUsd === null && cardPriceUsdFoil === true){
+    displayPriceUsd = (" $ " + cardPriceUsd + "~")
+    displayPriceUsdFoil = ("Foil card price is unavalible")
+  }else if(cardPriceUsd === null && cardPriceUsdFoil){
     console.log("Normal card price is unavalible");
-    console.log("Foil card price is $ " + cardPriceUsdFoil);
+    console.log(" $ " + cardPriceUsdFoil + "~");
+    displayPriceUsd = ("Normal card price is unavalible")
+    displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
   }else{
-    console.log("Card price is $ " + cardPriceUsd);
-    console.log("Foil card price is $ " + cardPriceUsdFoil);
+    console.log(" $ " + cardPriceUsd + "~");
+    console.log(" $ " + cardPriceUsdFoil + "~");
+    displayPriceUsd = (" $ " + cardPriceUsd + "~")
+    displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
   }
 
-  if(cardPriceEuro && cardPriceEuroFoil === null){
+  if(cardPriceEuro === null && cardPriceEuroFoil === null){
     console.log("Normal card price is unavalible");
     console.log("Foil card price is unavalible");
-  }else if(cardPriceEuro === true && cardPriceEuroFoil === null){
-    console.log("Card price is $ " + cardPriceEuro);
+    displayPriceEuro = ("Normal card price is unavalible")
+    displayPriceEuroFoil = ("Foil card price is unavalible")
+  }else if(cardPriceEuro && cardPriceEuroFoil === null){
+    console.log(" € " + cardPriceEuro + "~");
     console.log("Foil card price is unavalible");
-  }else if(cardPriceEuro === null && cardPriceEuroFoil === true){
+    displayPriceEuro = (" € " + cardPriceEuro + "~")
+    displayPriceEuroFoil = ("Foil card price is unavalible")
+  }else if(cardPriceEuro === null && cardPriceEuroFoil){
     console.log("Normal card price is unavalible");
-    console.log("Foil card price is $ " + cardPriceEuroFoil);
+    console.log("Foil card price is € " + cardPriceEuroFoil + "~");
+    displayPriceEuro = ("Normal card price is unavalible")
+    displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
   }else{
-    console.log("Card price is $ " + cardPriceEuro);
-    console.log("Foil card price is $ " + cardPriceEuroFoil);
+    console.log("Card price is € " + cardPriceEuro + "~");
+    console.log("Foil card price is € " + cardPriceEuroFoil + "~");
+    displayPriceEuro = (" € " + cardPriceEuro + "~")
+    displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
   }
   
   
@@ -189,14 +221,14 @@ function printCards(cardarray) {
     '<strong>Card Type:</strong> ' + cardarray.type_line + '<br/>';
   if (PriceType) {
     bodyContentEl.innerHTML +=
-      '<strong>Card Price:</strong> ' + "$" + cardarray.prices.usd + "~" + '<br/>';
+      '<strong>Card Price:</strong> ' + displayPriceUsd + '<br/>';
     bodyContentEl.innerHTML +=
-      '<strong>Card Foil Price:</strong> ' + "$" + cardarray.prices.usd_foil + "~" + '<br/>';
+      '<strong>Card Foil Price:</strong> ' + displayPriceUsdFoil + '<br/>';
   } else {
     bodyContentEl.innerHTML +=
-      '<strong>Card Price:</strong> ' + "€" + cardarray.prices.eur + "~" + '<br/>';
+      '<strong>Card Price:</strong> ' + displayPriceEuro + '<br/>';
     bodyContentEl.innerHTML +=
-      '<strong>Card Foil Price:</strong> ' + "€" + cardarray.prices.eur_foil + "~" + '<br/>';
+      '<strong>Card Foil Price:</strong> ' + displayPriceEuroFoil + '<br/>';
   }
 
   if (cardarray.oracle_text) {
@@ -255,14 +287,15 @@ function allCardNames() {
 
       
     })
-  //catch's error
-  //   .catch(error => {
-  //     alert('allCardNames failed');
-  //   });
+    .catch(error => {
+      alert('Card entered is invalid');
+       });
+      return;
   
   return;
 }
 
+addEventListener
 
 allCardNames()
 
