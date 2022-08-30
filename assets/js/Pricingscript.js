@@ -133,7 +133,7 @@ function getCardPrice(cardarray) {
   cardPriceUsdFoil = cardarray.prices.usd_foil
   cardPriceEuro = cardarray.prices.eur
   cardPriceEuroFoil = cardarray.prices.eur_foil
-
+//testing and pplying definitions to be used later
   if(cardPriceUsd === null && cardPriceUsdFoil === null){
     console.log("Normal card price is unavalible");
     console.log("Foil card price is unavalible");
