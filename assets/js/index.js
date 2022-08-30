@@ -27,11 +27,12 @@ searchBtn.addEventListener('click', function() {
         //test storage
         console.log(localStorage.getItem('indexSearch', searchInput));
 
-        //link to deck builder page
+
+        //link to pricing page
         window.location.replace('./assets/html/Pricing.html');
 
     }
-
+    
 });
 
 // modal close button functionality
