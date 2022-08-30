@@ -244,14 +244,20 @@ function printCards(cardarray) {
   img.width = "250";
   img.height = "100";
 
+  
 
   var linkButtonEl = document.createElement('a');
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
   linkButtonEl.addEventListener("click", function () {
+  if (localStorage.getItem('deck') || ){
+    
+  }else {
     Deck.push(cardarray.name);//Add the text 'item1' to Deck
-    localStorage.setItem('names', JSON.stringify(Deck));
-    console.log(localStorage.getItem('names'))
+    localStorage.setItem('deck', JSON.stringify(Deck));
+    var obj = JSON.parse(localStorage.getItem('deck'));
+    console.log(obj)
+  }
    })
 
   resultBody.append(titleEl, bodyContentEl, linkButtonEl, img);
