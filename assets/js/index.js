@@ -88,4 +88,7 @@ function cardNameSuggestions() {
 
 }
 
+var today = (moment().format("MMMM D, YYYY"))
+$("#date").text(today);
+
 cardNameSuggestions();
