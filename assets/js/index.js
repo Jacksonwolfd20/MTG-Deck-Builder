@@ -25,7 +25,7 @@ searchBtn.addEventListener('click', function() {
         localStorage.setItem('indexEurCheck', eurCheck);
 
         //link to deck builder page
-        window.location.replace('../html/deck-builder.html');
+        window.location.replace('../html/Pricing.html');
 
     }
 
