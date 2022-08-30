@@ -1,24 +1,24 @@
 // Stores Search button
 var searchbtn = document.querySelector("#searchbutton");
 var PriceType = true
-//Search button array
-searchbtnmain = document.querySelector("#searchButton")
-
 var resultTextEl = document.querySelector('#result-text');
 var resultContentEl = document.querySelector('#result-content');
-
+//getting the variable for the card img
 var cardImg = document.querySelector("#cardImg");
-
+// sets modal to variable
 var modal = document.querySelector("#modalAlert");
 var closeButton = document.querySelector("#closeButton");
 var alertMessege = document.querySelector("#alertMessege")
-
+// Stores Prices
 var displayPriceUsd = (" ")
 var displayPriceUsdFoil = (" ")
 var displayPriceEuro = (" ")
 var displayPriceEuroFoil = (" ")
-
+//Creates a Variable Outside of the code
 let cardNamesAuto = [];
+
+var Deck = [];
+
 
 
 // Pulls from local storage to display the first card
@@ -74,6 +74,7 @@ searchbtn.addEventListener("click", function () {
       PriceType = false
     }
   }
+
 
 }
 );
@@ -137,9 +138,6 @@ function cardInput(searchinput) {
 
       }
     })
-   .catch(error => {
-  alert('Card entered is invalid');
-   });
   return;
 }
 
@@ -246,10 +244,21 @@ function printCards(cardarray) {
   img.width = "250";
   img.height = "100";
 
+  
 
   var linkButtonEl = document.createElement('a');
   linkButtonEl.textContent = 'Add To Deck List';
-  linkButtonEl.classList.add('button', 'is-primary');
+  linkButtonEl.classList.add('button');
+  linkButtonEl.addEventListener("click", function () {
+  if (localStorage.getItem('deck') || ){
+    
+  }else {
+    Deck.push(cardarray.name);//Add the text 'item1' to Deck
+    localStorage.setItem('deck', JSON.stringify(Deck));
+    var obj = JSON.parse(localStorage.getItem('deck'));
+    console.log(obj)
+  }
+   })
 
   resultBody.append(titleEl, bodyContentEl, linkButtonEl, img);
 
@@ -287,17 +296,14 @@ function allCardNames() {
 
       
     })
-    .catch(error => {
-      alert('Card entered is invalid');
-       });
+    
       return;
-  
-  return;
 }
 
-addEventListener
 
-allCardNames()
+
+
+allCardNames();
 
 
 
