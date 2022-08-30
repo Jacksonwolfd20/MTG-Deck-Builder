@@ -24,9 +24,13 @@ searchBtn.addEventListener('click', function() {
         localStorage.setItem('indexSearch', searchInput);
         localStorage.setItem('indexUsdCheck', usdCheck);
         localStorage.setItem('indexEurCheck', eurCheck);
+        //test storage
+        console.log(localStorage.getItem('indexSearch', searchInput));
+
 
         //link to pricing page
         window.location.replace('./assets/html/Pricing.html');
+
     }
     
 });

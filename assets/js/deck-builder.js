@@ -37,9 +37,25 @@ function saveDeck() {
 saveDeck();
 */
 
-//TODO import function to handle local storage data from index search.
+searchbtn.addEventListener('click', function() {
+    event.preventDefault();
+    
+    // grabs the user's input from the search box
+    var searchInput = searchBox.val().trim();
+    console.log(searchInput);
 
-//TODO recycle search functions from pricing js and modals from index js if needed.
+    if (searchInput === '' || searchInput == 'undefined') {
+        modal.classList.add('is-active');
+        alertMessege.textContent = ("Sorry, the card either couldn't be found or it doesn't exist. Please try again!")
+    } else {
+        updateDisplay(searchInput)
+    }
+});
 
-//TODO deck-builder page functionality.
+closeButton.addEventListener('click', function () {
+    modal.classList.remove('is-active');
+});
 
+function updateDisplay() {
+
+};
