@@ -1,1 +1,30 @@
 /* TODO styles for deck builder page.*/
+#search-button, .button, #add-button {
+    background-color: rgb(241, 173, 100);
+}
+
+body {
+    background-color: rgb(158, 149, 144);
+}
+
+#search-box { 
+    background-color: rgb(78,59,52);
+}
+
+#search-bar {
+    background-color: #fffdd0;
+}
+
+.navbar {
+    background-color: rgb(97, 73, 65);
+}
+.navbar-item {
+    color: #fffdd0;
+}
+.label {
+    color: #fffdd0;
+}
+
+.column {
+    background-color: #fffdd0;
+}
