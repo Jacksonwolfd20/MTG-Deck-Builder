@@ -57,6 +57,7 @@ searchbtn.addEventListener("click", function () {
   //Verify a Card Name was entered
   if (searchinput === "" || searchinput == "undefined") {
     modal.classList.add('is-active');
+    alertMessege.textContent = ("Sorry The Card Either Cant Be Found Or It Doesnt Exist Please Try Again")
   } else {
     // Switches the spaces with + symbol
     searchinput = additionSymbolAdd(searchinput);
