@@ -16,6 +16,7 @@ searchBtn.addEventListener('click', function() {
         modal.classList.add('is-active');
 
     } else {
+        event.preventDefault();
         //correct string format for scryfall api
         searchInput = searchInput.replace(/\s/g, '+');
 
@@ -24,11 +25,10 @@ searchBtn.addEventListener('click', function() {
         localStorage.setItem('indexUsdCheck', usdCheck);
         localStorage.setItem('indexEurCheck', eurCheck);
 
-        //link to deck builder page
-        window.location.replace('../html/Pricing.html');
-
+        //link to pricing page
+        window.location.replace('./assets/html/Pricing.html');
     }
-
+    
 });
 
 // modal close button functionality
