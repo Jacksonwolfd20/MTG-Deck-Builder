@@ -1,6 +1,8 @@
 // Stores Search button
 var searchbtn = document.querySelector("#searchbutton");
 var PriceType = true
+//Search button array
+searchbtnmain = document.querySelector("#searchButton")
 
 var resultTextEl = document.querySelector('#result-text');
 var resultContentEl = document.querySelector('#result-content');
@@ -18,8 +20,21 @@ var displayPriceEuroFoil = (" ")
 
 let cardNamesAuto = [];
 
-//work in progress
-//var cardNamesAuto = 0
+
+// Pulls from local storage to display the first card
+function firstSearch(){
+  //localStorage.getItem('indexSearch', searchInput);
+  //localStorage.getItem('indexUsdCheck', usdCheck);
+  //localStorage.getItem('indexEurCheck', eurCheck);
+
+  var searchinput = localStorage.getItem('indexSearch')
+
+  //console.log(localStorage.getItem('indexSearch', searchInput));
+
+  cardInput(searchinput);
+}
+
+firstSearch()
 
 // Switches the spaces with + symbol
 function additionSymbolAdd(myString) {
@@ -30,6 +45,10 @@ closeButton.addEventListener("click", function () {
   modal.classList.remove("is-active");
 })
 
+
+
+
+//adds search functionality
 searchbtn.addEventListener("click", function () {
   event.preventDefault();
   // Get the card entereed
@@ -37,8 +56,7 @@ searchbtn.addEventListener("click", function () {
   console.log(searchinput);
   //Verify a Card Name was entered
   if (searchinput === "" || searchinput == "undefined") {
-    modal.classList.add("is-active");
-    alertMessege.textContent = ("Sorry The Card Either Cant Be Found Or It Doesnt Exist Please Try Again")
+    modal.classList.add('is-active');
   } else {
     // Switches the spaces with + symbol
     searchinput = additionSymbolAdd(searchinput);
@@ -47,9 +65,9 @@ searchbtn.addEventListener("click", function () {
     //Gets card shop info
     cardInput(searchinput);
     //Checks only one checkmark to determine the value of the other
-    var checkMark = document.getElementById('UsdCheck');
+    var checkMarkMain = document.getElementById('UsdCheck');
     //Checks Checkmarks
-    if (checkMark.checked) {
+    if (checkMarkMain.checked) {
       PriceType = true
     } else {
       PriceType = false
@@ -58,9 +76,6 @@ searchbtn.addEventListener("click", function () {
 
 }
 );
-
-
-
 
 
 //coding card img finder
@@ -279,6 +294,7 @@ function allCardNames() {
   return;
 }
 
+addEventListener
 
 allCardNames()
 
