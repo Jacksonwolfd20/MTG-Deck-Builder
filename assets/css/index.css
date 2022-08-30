@@ -1,6 +1,5 @@
 html {
     background-image: url(../images/mtgbackground.jpg);
-
 }
 
 .navbar, .navbar-dropdown, .navbar-link, #navbarBasicExample {
@@ -26,5 +25,11 @@ label, .navbar-link, .navbar-item {
 }
 
 .descriptionBox {
+    font-size: large;
     background-color: #fffdd0;
+}
+.image {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
 }
