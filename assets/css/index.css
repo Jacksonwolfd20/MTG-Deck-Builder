@@ -1,10 +1,12 @@
 html {
     background-image: url(../images/mtgbackground.jpg);
+
 }
 
-.navbar, .navbar-dropdown {
+.navbar, .navbar-dropdown, .navbar-link, #navbarBasicExample {
     background-color: rgb(97, 73, 65);
 }
+
 #searchBox {
     background-color: rgb(78,59,52);
 }
