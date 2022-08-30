@@ -12,10 +12,12 @@ searchBtn.addEventListener('click', function() {
 
     //check for appropriate input fire warning modal if not.
     if (searchInput === '' || searchInput === undefined) {
+
         event.preventDefault();
         modal.classList.add('is-active');
 
     } else {
+
         event.preventDefault();
         //correct string format for scryfall api
         searchInput = searchInput.replace(/\s/g, '+');
@@ -41,3 +43,49 @@ modalCloseBtn.addEventListener('click', function() {
     modal.classList.remove('is-active');
 
 });
+
+//Card name Suggestions
+function cardNameSuggestions() {
+    //Stores API URL
+    var cardName = encodeURI(`https://api.scryfall.com/catalog/card-names`);
+  
+    fetch(cardName, {
+
+      method: 'GET', //GET is the default.
+      credentials: 'same-origin', // include, *same-origin, omit
+      redirect: 'follow', // manual, *follow, error
+      cache: 'reload'  // Refresh the cache
+
+    })
+
+      .then(response => {
+
+        return response.json();
+
+      })
+
+      .then(data => {
+        
+        //Stores the data to be used later on
+       cardNamesAuto = data.data
+
+       $('#searchBar').autocomplete({
+
+        maxResults: 10,
+        source: function(request, response) {
+
+          var results = $.ui.autocomplete.filter(cardNamesAuto, request.term);
+  
+          response(results.slice(0, 10));
+
+        }
+
+       });
+  
+      })
+      
+    return;
+
+}
+
+cardNameSuggestions();
