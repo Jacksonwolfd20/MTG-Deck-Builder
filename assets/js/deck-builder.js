@@ -16,6 +16,7 @@ var deckList = document.querySelector('#deck-list');
 
 var newDeck = [];
 
+
 // when the page is opened, function checks for an existing deck and prints it to the page if it exists
 function retrieveDeck() {
     // checks if localStorage 'deck' exists
@@ -34,10 +35,18 @@ function retrieveDeck() {
         var node = document.createTextNode("");
         node = oldDeck[i];
         var listItem = document.createElement("li");
+        var RemoveButton = document.createElement("button");
         
         // prints card to the page
         listItem.append(node);
-        deckList.append(listItem);
+
+        var removeButtonEl = document.createElement('a');
+        removeButtonEl.textContent = 'Remove Card';
+        removeButtonEl.classList.add('button');
+
+
+
+        deckList.append(listItem, removeButtonEl);
     }
 
     console.log(localStorage.getItem('deck'));

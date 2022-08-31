@@ -22,7 +22,7 @@
       
           <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <a class="navbar-item" href="https://magic.wizards.com/en">
-              <img src="../images/mtglogo.jpg" width="112" height="28">
+              <img id="Img-Background" src="../images/mtglogo.jpg" width="112" height="28">
             </a>
             <a role="button" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
@@ -35,15 +35,12 @@
           <div class="navbar-start">
             <a class="navbar-item" href="../../index.html">
               Main Page
-              <a class="navbar-item" href="https://magic.wizards.com/en/how-to-play">
+              <a class="navbar-item" href="https://magic.wizards.com/en/how-to-play" target="_blank">
                 How to Play
               </a>
         
-              <a class="navbar-item" href="https://media.wizards.com/2022/downloads/MagicCompRules%2020220708.pdf">
-                Rulebook pdf
-              </a>
-            <a class="navbar-item" href="deck-builder.html">
-                Deck List
+              <a class="navbar-item" href="https://magic.wizards.com/en/formats/commander" target="_blank">
+                Commander Rulebook
               </a>
               </div>
             </div>
@@ -56,7 +53,7 @@
         </div>
         <!-- links to Pricing.html -->
         <div class="navbar-end">
-            <a class="button" href="Pricing.html">Pricing</a>
+            <a class="button" href="deck-builder.html">Deck Builder</a>
         </div>
         
         
@@ -99,9 +96,9 @@
 
 <!--Will be where cards ar displayed-->
 <div class="box column  is-offset-one-fifth is-three-quarters ">
-  <div id="modalAlert" class="modal">
+  <div id="modalAlert" class="modal ">
     <div class="modal-background"></div>
-    <div class="modal-content has-background-white py-5 px-5">
+    <div class="modal-content custom-modal py-5 px-5">
       <p id="alertMessege"></p>
     </div>
     <button id="closeButton" class="modal-close is-large" aria-label="close"></button>
