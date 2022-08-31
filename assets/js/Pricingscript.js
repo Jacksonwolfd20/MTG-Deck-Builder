@@ -19,10 +19,11 @@ let cardNamesAuto = [];
 
 var Deck = [];
 
+localStorage.setItem('deck', JSON.stringify(Deck))
 
 
 // Pulls from local storage to display the first card
-function firstSearch(){
+function firstSearch() {
   //localStorage.getItem('indexSearch', searchInput);
   //localStorage.getItem('indexUsdCheck', usdCheck);
   //localStorage.getItem('indexEurCheck', eurCheck);
@@ -147,52 +148,52 @@ function getCardPrice(cardarray) {
   cardPriceUsdFoil = cardarray.prices.usd_foil
   cardPriceEuro = cardarray.prices.eur
   cardPriceEuroFoil = cardarray.prices.eur_foil
-//testing and pplying definitions to be used later
-  if(cardPriceUsd === null && cardPriceUsdFoil === null){
+  //testing and pplying definitions to be used later
+  if (cardPriceUsd === null && cardPriceUsdFoil === null) {
     console.log("Normal card price is unavalible");
     console.log("Foil card price is unavalible");
     displayPriceUsd = ("Normal card price is unavalible")
     displayPriceUsdFoil = ("Foil card price is unavalible")
-  }else if(cardPriceUsd && cardPriceUsdFoil === null){
+  } else if (cardPriceUsd && cardPriceUsdFoil === null) {
     console.log(" $ " + cardPriceUsd + "~");
     console.log("Foil card price is unavalible");
     displayPriceUsd = (" $ " + cardPriceUsd + "~")
     displayPriceUsdFoil = ("Foil card price is unavalible")
-  }else if(cardPriceUsd === null && cardPriceUsdFoil){
+  } else if (cardPriceUsd === null && cardPriceUsdFoil) {
     console.log("Normal card price is unavalible");
     console.log(" $ " + cardPriceUsdFoil + "~");
     displayPriceUsd = ("Normal card price is unavalible")
     displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
-  }else{
+  } else {
     console.log(" $ " + cardPriceUsd + "~");
     console.log(" $ " + cardPriceUsdFoil + "~");
     displayPriceUsd = (" $ " + cardPriceUsd + "~")
     displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
   }
 
-  if(cardPriceEuro === null && cardPriceEuroFoil === null){
+  if (cardPriceEuro === null && cardPriceEuroFoil === null) {
     console.log("Normal card price is unavalible");
     console.log("Foil card price is unavalible");
     displayPriceEuro = ("Normal card price is unavalible")
     displayPriceEuroFoil = ("Foil card price is unavalible")
-  }else if(cardPriceEuro && cardPriceEuroFoil === null){
+  } else if (cardPriceEuro && cardPriceEuroFoil === null) {
     console.log(" € " + cardPriceEuro + "~");
     console.log("Foil card price is unavalible");
     displayPriceEuro = (" € " + cardPriceEuro + "~")
     displayPriceEuroFoil = ("Foil card price is unavalible")
-  }else if(cardPriceEuro === null && cardPriceEuroFoil){
+  } else if (cardPriceEuro === null && cardPriceEuroFoil) {
     console.log("Normal card price is unavalible");
     console.log("Foil card price is € " + cardPriceEuroFoil + "~");
     displayPriceEuro = ("Normal card price is unavalible")
     displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
-  }else{
+  } else {
     console.log("Card price is € " + cardPriceEuro + "~");
     console.log("Foil card price is € " + cardPriceEuroFoil + "~");
     displayPriceEuro = (" € " + cardPriceEuro + "~")
     displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
   }
-  
-  
+
+
 };
 
 //function to print all the info to the screen
@@ -244,21 +245,37 @@ function printCards(cardarray) {
   img.width = "250";
   img.height = "100";
 
-  
+
 
   var linkButtonEl = document.createElement('a');
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
+
+
   linkButtonEl.addEventListener("click", function () {
-  if (localStorage.getItem('deck') || ){
-    
-  }else {
-    Deck.push(cardarray.name);//Add the text 'item1' to Deck
-    localStorage.setItem('deck', JSON.stringify(Deck));
+    localStorage.setItem('deck', JSON.stringify(Deck))
     var obj = JSON.parse(localStorage.getItem('deck'));
-    console.log(obj)
-  }
-   })
+
+    if (obj.length > 99) {
+      console.log("To Big")
+      modal.classList.add('is-active');
+    } else if (obj.includes(cardarray.name) ) {
+      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land") || cardarray.name.startsWith("Dragon's Approach" || cardarray.name.startsWith("Persistent Petitioners") || cardarray.name.startsWith("Rat Colony")|| cardarray.name.startsWith("Relentless Rats") || cardarray.name.startsWith("Shadowborn Apostle"))){
+        Deck.push(cardarray.name);//Add the text 'item1' to Deck
+        localStorage.setItem('deck', JSON.stringify(Deck))
+        obj = JSON.parse(localStorage.getItem('deck'));
+        console.log(obj)
+      }else{
+        modal.classList.add('is-active');
+      }
+    } else {
+      Deck.push(cardarray.name);//Add the text 'item1' to Deck
+      localStorage.setItem('deck', JSON.stringify(Deck))
+      obj = JSON.parse(localStorage.getItem('deck'));
+      console.log(obj)
+    }
+
+  })
 
   resultBody.append(titleEl, bodyContentEl, linkButtonEl, img);
 
@@ -284,20 +301,20 @@ function allCardNames() {
     .then(data => {
       console.log(data);
       //Stores the data to be used later on
-     cardNamesAuto = data.data
-     $('#search-input').autocomplete({
-      maxResults: 10,
-      source: function(request, response) {
-        var results = $.ui.autocomplete.filter(cardNamesAuto, request.term);
+      cardNamesAuto = data.data
+      $('#search-input').autocomplete({
+        maxResults: 10,
+        source: function (request, response) {
+          var results = $.ui.autocomplete.filter(cardNamesAuto, request.term);
 
-        response(results.slice(0, 10));
-    }
-     });
+          response(results.slice(0, 10));
+        }
+      });
 
-      
+
     })
-    
-      return;
+
+  return;
 }
 
 
