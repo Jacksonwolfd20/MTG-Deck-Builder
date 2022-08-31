@@ -15,8 +15,21 @@ body {
     background-color: #fffdd0;
 }
 
+/* NAV BAR */
 .navbar {
     background-color: rgb(97, 73, 65);
+}
+
+.navbar-start {
+    padding-left: 7px;
+}
+
+.navbar-end {
+    padding-right: 7px;
+}
+
+.label, .title {
+    color: #fffdd0;
 }
 .navbar-item {
     color: #fffdd0;
@@ -27,4 +40,14 @@ body {
 
 .column {
     background-color: #fffdd0;
+}
+
+.cardBox {
+    background-color: #fffdd0;
+}
+
+.ui-menu {
+    color: rgb(78,59,52);
+    background-color: rgb(165, 155, 150);
+    font-size: large;
 }
