@@ -16,11 +16,81 @@ var deckList = document.querySelector('#deck-list');
 
 var newDeck = [];
 
+// button toggle functionality
+usdBtn.addEventListener('click', function() {
+    if (!usdBtn.classList.contains("is-selected")) {
+        eurBtn.classList.remove("is-selected");
+        eurBtn.classList.remove("is-dark");
+        eurBtn.classList.add("is-light");
+
+        usdBtn.classList.add("is-selected");
+        usdBtn.classList.remove("is-light");
+        usdBtn.classList.add("is-dark");
+    }
+});
+
+eurBtn.addEventListener('click', function() {
+    if (!eurBtn.classList.contains("is-selected")) {
+        usdBtn.classList.remove("is-selected");
+        usdBtn.classList.remove("is-dark");
+        usdBtn.classList.add("is-light");
+
+        eurBtn.classList.add("is-selected");
+        eurBtn.classList.remove("is-light");
+        eurBtn.classList.add("is-dark");
+    }
+});
+
+standardBtn.addEventListener('click', function() {
+    if (!standardBtn.classList.contains("is-selected")) {
+        foilBtn.classList.remove("is-selected");
+        foilBtn.classList.remove("is-dark");
+        foilBtn.classList.add("is-light");
+
+        standardBtn.classList.add("is-selected");
+        standardBtn.classList.remove("is-light");
+        standardBtn.classList.add("is-dark");
+    }
+});
+
+foilBtn.addEventListener('click', function() {
+    if (!foilBtn.classList.contains("is-selected")) {
+        standardBtn.classList.remove("is-selected");
+        standardBtn.classList.remove("is-dark");
+        standardBtn.classList.add("is-light");
+
+        foilBtn.classList.add("is-selected");
+        foilBtn.classList.remove("is-light");
+        foilBtn.classList.add("is-dark");
+    }
+});
+
+
+// search button functionality
+searchBtn.addEventListener('click', function() {
+    event.preventDefault();
+    responseEl.remove();
+
+    // grabs the user's input from the search box
+    var searchInput = searchBar.val().trim();
+    console.log(searchInput);
+    
+    // checks for a valid input
+    if (searchInput === '' || searchInput == 'undefined') {
+        console.log('No results found');
+        var responseEl = document.createElement('p');
+        responseEl.textContent = "Sorry, the card either couldn't be found or it doesn't exist. Please try again!"
+        searchBox.append(responseEl);
+    } else {
+        updateDisplay(searchInput);
+    }
+});
+
 // when the page is opened, function checks for an existing deck and prints it to the page if it exists
 function retrieveDeck() {
     // checks if localStorage 'deck' exists
-    if (!localStorage.getItem('deck')) {
-        localStorage.clear('deck');
+    if (localStorage.getItem('deck') === null) {
+        return;
     }
 
     // stores localStorage 'deck' in a variable and sorts it alphabetically
@@ -43,30 +113,7 @@ function retrieveDeck() {
     console.log(localStorage.getItem('deck'));
 };
 
-retrieveDeck();
-
 /*
-// search function triggered by clicking the search button
-searchBtn.addEventListener('click', function() {
-    event.preventDefault();
-    responseEl.remove();
-
-    // grabs the user's input from the search box
-    var searchInput = searchBar.val().trim();
-    console.log(searchInput);
-    
-    // checks for a valid input
-    if (searchInput === '' || searchInput == 'undefined') {
-        console.log('No results found');
-        var responseEl = document.createElement('p');
-        responseEl.textContent = "Sorry, the card either couldn't be found or it doesn't exist. Please try again!"
-        searchBox.append(responseEl);
-    } else {
-        updateDisplay(searchInput);
-    }
-});
-
-
 // checks for user input and returns card image to the page
 function updateDisplay(searchInput) {
     //
@@ -107,7 +154,7 @@ function getCard(cardArray) {
     var cardPriceEuro = cardArray.prices.eur;
     var cardPriceEuroFoil = cardArray.prices.eur_foil;
 
-    if (
+    //if (
 
 };
 
@@ -139,7 +186,7 @@ function allCardNames() {
     });
     return;
 };
-
-allCardNames();
-
 */
+
+retrieveDeck();
+//allCardNames();
