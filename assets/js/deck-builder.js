@@ -16,20 +16,26 @@ var deckList = document.querySelector('#deck-list');
 
 var newDeck = [];
 
+// when the page is opened, function checks for an existing deck and prints it to the page if it exists
 function retrieveDeck() {
+    // checks if localStorage 'deck' exists
     if (!localStorage.getItem('deck')) {
         localStorage.clear('deck');
     }
 
+    // stores localStorage 'deck' in a variable and sorts it alphabetically
     let oldDeck = JSON.parse(localStorage.getItem('deck'));
     oldDeck.sort();
     console.log(oldDeck);
     
+    // loops once for each item in oldDeck
     for (var i = 0; i < oldDeck.length; i++) {
+        // creates new <li> with the name of the card at oldDeck[i]
         var node = document.createTextNode("");
-        var listItem = document.createElement("li");
-
         node = oldDeck[i];
+        var listItem = document.createElement("li");
+        
+        // prints card to the page
         listItem.append(node);
         deckList.append(listItem);
     }
@@ -38,7 +44,6 @@ function retrieveDeck() {
 };
 
 retrieveDeck();
-
 
 /*
 // search function triggered by clicking the search button
