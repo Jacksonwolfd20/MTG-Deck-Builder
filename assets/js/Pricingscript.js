@@ -250,15 +250,13 @@ function printCards(cardarray) {
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
   linkButtonEl.addEventListener("click", function () {
-  if (localStorage.getItem('deck') || ){
-    
-  }else {
+  
     Deck.push(cardarray.name);//Add the text 'item1' to Deck
     localStorage.setItem('deck', JSON.stringify(Deck));
     var obj = JSON.parse(localStorage.getItem('deck'));
     console.log(obj)
-  }
-   })
+  
+  })
 
   resultBody.append(titleEl, bodyContentEl, linkButtonEl, img);
 
