@@ -12,12 +12,20 @@
 </head>
 
 <body>
+  <header>
+    <!-- <h1> AND <div class="navbar-menu"> SHOULD BE DISPLAYED INLINE; <h1> SHOULD ALIGN CENTER; <div class="navbar-menu"> SHOULD ALIGN RIGHT -->
+    <!-- links back to index.html -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <!--Add Image for Navbar-->
           
       
           <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <a class="navbar-item" href="https://magic.wizards.com/en">
+              <img src="../images/mtglogo.jpg" width="112" height="28">
+            </a>
+            <a role="button" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </a>
@@ -27,7 +35,13 @@
           <div class="navbar-start">
             <a class="navbar-item" href="../../index.html">
               Main Page
-            </a>
+              <a class="navbar-item" href="https://magic.wizards.com/en/how-to-play">
+                How to Play
+              </a>
+        
+              <a class="navbar-item" href="https://media.wizards.com/2022/downloads/MagicCompRules%2020220708.pdf">
+                Rulebook pdf
+              </a>
             <a class="navbar-item" href="deck-builder.html">
                 Deck List
               </a>
@@ -36,6 +50,20 @@
           </div>
         </div>
       </nav>
+      <nav class="navbar" role="navigation">
+        <div class="navbar-start">
+            <a class="button" href="../../index.html">Home</a>
+        </div>
+        <!-- links to Pricing.html -->
+        <div class="navbar-end">
+            <a class="button" href="Pricing.html">Pricing</a>
+        </div>
+        
+        
+    </div>
+    </nav>
+    <!------------------------------------------------------------------------------------------------------------------------------------------->
+</header>
       <!--Bar for the left of the screen-->
       <form class="box is-2 column height-100 position-fixed is-mobile">
         <div class="field bulma-center-mixin">
