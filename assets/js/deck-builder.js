@@ -34,8 +34,6 @@ function retrieveDeck() {
         deckList.append(listItem);
     }
 
-    newDeck.push(oldDeck);
-    localStorage.setItem('deck', JSON.stringify(newDeck));
     console.log(localStorage.getItem('deck'));
 };
 
