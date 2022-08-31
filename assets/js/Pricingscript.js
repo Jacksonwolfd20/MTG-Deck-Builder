@@ -253,6 +253,7 @@ function printCards(cardarray) {
 
 
   linkButtonEl.addEventListener("click", function () {
+
     localStorage.setItem('deck', JSON.stringify(Deck))
     var obj = JSON.parse(localStorage.getItem('deck'));
 
