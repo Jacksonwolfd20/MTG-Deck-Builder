@@ -14,29 +14,35 @@ var addBtn = document.querySelector('#add-button');
 
 var deckList = document.querySelector('#deck-list');
 
+var newDeck = [];
 
-var deck = [];
-
-/*
-function saveDeck() {
-    var newDeck = [];
-    newDeck = document.getElementById('deck-list');
-
-    console.log(newDeck);
-
-    if (localStorage.getItem('deck') == null) {
-        localStorage.setItem('deck', '[]');
+function retrieveDeck() {
+    if (!localStorage.getItem('deck')) {
+        localStorage.clear('deck');
     }
 
-    var oldDeck = JSON.parse(localStorage.getItem('deck'));
-    oldDeck.push(newDeck);
+    let oldDeck = JSON.parse(localStorage.getItem('deck'));
+    oldDeck.sort();
+    console.log(oldDeck);
+    
+    for (var i = 0; i < oldDeck.length; i++) {
+        var node = document.createTextNode("");
+        var listItem = document.createElement("li");
 
-    localStorage.setItem('deck', JSON.stringify(oldDeck));
-}
+        node = oldDeck[i];
+        listItem.append(node);
+        deckList.append(listItem);
+    }
 
-saveDeck();
-*/
+    newDeck.push(oldDeck);
+    localStorage.setItem('deck', JSON.stringify(newDeck));
+    console.log(localStorage.getItem('deck'));
+};
 
+retrieveDeck();
+
+
+/*
 // search function triggered by clicking the search button
 searchBtn.addEventListener('click', function() {
     event.preventDefault();
@@ -60,7 +66,7 @@ searchBtn.addEventListener('click', function() {
 
 // checks for user input and returns card image to the page
 function updateDisplay(searchInput) {
-    //Stores The URL
+    //
     var cardId = encodeURI(`https://api.scryfall.com/cards/named?fuzzy=${searchInput}`);
 
     fetch(cardId, {
@@ -82,10 +88,55 @@ function updateDisplay(searchInput) {
             searchBox.append(responseEl);
         } else {
             getCard(cardArray);
-            getPrice(cardArray);
         }
     }) .catch(error => {
         console.error('Error:', error);
     })
     return;
 };
+
+function getCard(cardArray) {
+    var cardImage = cardArray.image_uris.border_crop;
+    cardDisplay.src = cardImage;
+
+    var cardPriceUsd = cardArray.prices.usd;
+    var cardPriceUsdFoil = cardArray.prices.usd_foil;
+    var cardPriceEuro = cardArray.prices.eur;
+    var cardPriceEuroFoil = cardArray.prices.eur_foil;
+
+    if (
+
+};
+
+function allCardNames() {
+    //
+    var cardIdName = encodeURI(`https://api.scryfall.com/catalog/card-names`);
+  
+    fetch(cardIdName, {
+      method: 'GET',
+      credentials: 'same-origin',
+      redirect: 'follow',
+      cache: 'reload'
+    }) .then (response => {
+        return response.json();
+    }) .then (data => {
+        console.log(data);
+
+        cardNameAuto = data.data
+
+        searchBar.autocomplete({
+        maxResults: 10,
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(cardNameAuto, request.term);
+            response(results.slice(0, 10));
+            }
+        });
+    }) .catch (error => {
+        console.error('Error:', error);
+    });
+    return;
+};
+
+allCardNames();
+
+*/
