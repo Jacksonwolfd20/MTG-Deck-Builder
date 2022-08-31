@@ -260,7 +260,7 @@ function printCards(cardarray) {
       console.log("To Big")
       modal.classList.add('is-active');
     } else if (obj.includes(cardarray.name) ) {
-      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land") || cardarray.name.startsWith("Dragon's Approach" || cardarray.name.startsWith("Persistent Petitioners") || cardarray.name.startsWith("Rat Colony")|| cardarray.name.startsWith("Relentless Rats") || cardarray.name.startsWith("Shadowborn Apostle"))){
+      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land") ){
         Deck.push(cardarray.name);//Add the text 'item1' to Deck
         localStorage.setItem('deck', JSON.stringify(Deck))
         obj = JSON.parse(localStorage.getItem('deck'));
