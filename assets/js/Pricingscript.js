@@ -17,12 +17,15 @@ var displayPriceEuroFoil = (" ")
 //Creates a Variable Outside of the code
 let cardNamesAuto = [];
 
+var exchangeRate = localStorage.getItem('Exchange');
+
 var Deck = [];
 
 var cardPriceFinal = 0
 
 progressLength = JSON.parse(localStorage.getItem('deck'));
 progress.setAttribute("value", progressLength.length);
+
 
 function firstSearch() {
 
@@ -113,25 +116,14 @@ function cardInput(searchinput) {
   return;
 }
 
+
+
 function getCardPrice(cardarray) {
   //Gathers the prices from the API  
   cardPriceUsd = cardarray.prices.usd
   cardPriceUsdFoil = cardarray.prices.usd_foil
 
-  var myHeaders = new Headers();
-  myHeaders.append("apikey", "uDNZOHIG8Ctv6Jar2ySnFWPZn0EuReP3");
-
-  var requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-    headers: myHeaders
-  };
-
-  fetch("https://api.apilayer.com/currency_data/live?source=USD&currencies=EUR", requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      var exchangeRate = data.quotes.USDEUR
-
+      console.log(exchangeRate)
       cardPriceEuro = cardPriceUsd * exchangeRate;
       cardPriceEuro = cardPriceEuro.toString();
       cardPriceEuro = cardPriceEuro.substring(0,5);
@@ -178,9 +170,9 @@ function getCardPrice(cardarray) {
       }
       //Prints cards
       printCards(cardarray);
-    })
+    }
 
-}
+
 
 
 //function to print all the info to the screen
