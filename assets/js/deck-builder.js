@@ -14,7 +14,7 @@ var addBtn = document.querySelector('#add-button');
 
 var deckList = document.querySelector('#deck-list');
 
-clearbtn = document.querySelector("#clearButton")
+var clearbtn = document.querySelector("#clearButton")
 
 var newDeck = [];
 
@@ -60,30 +60,12 @@ function retrieveDeck() {
             cardtextSinglei.textContent = ' ';
             console.log("text" + [i])
          })
+
     }
  
-    for (var i = 0; i < countCards; i++) {
-        
-        var cardButtonSinglei = document.querySelector('.deleteButton' + [i]);
-        console.log("button" + [i])
-        var cardtextSinglei = document.querySelector('.deletetext' + [i]);
-        console.log("text" + [i])
+    
 
-        cardButtonSinglei.addEventListener("click", function () {
-            cardButtonSinglei.remove('button');
-            console.log("button" + [i])
-            cardtextSinglei.textContent = ' ';
-            console.log("text" + [i])
-         })
-
-    }
-
-    var cardButtonSingle = document.querySelector('.deleteButton' + countCards);
-    var cardtextSingle = document.querySelector('.deletetext' + countCards);
-    cardButtonSingle.addEventListener("click", function () {
-        cardButtonSingle.remove('button');
-        cardtextSingle.textContent = ' ';
-    })
+    
 
 
     clearbtn.addEventListener("click", function () { 
