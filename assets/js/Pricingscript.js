@@ -23,7 +23,7 @@ var exchangeRate = localStorage.getItem('Exchange');
 
 
 var Deck = [];
-progressLength = JSON.parse(localStorage.getItem('deck'));
+var progressLength = JSON.parse(localStorage.getItem('deck'));
 var cardPriceFinal = 0
 
 startcode()
@@ -247,31 +247,27 @@ function printCards(cardarray) {
   var progressLength = JSON.parse(localStorage.getItem('deck'));
   linkButtonEl.addEventListener("click", function () {
     event.preventDefault();
-    progress.setAttribute("value", progressLength.length);
+    startcode()
     if (localStorage.getItem('deck') === null) {
       var Deck = []
       localStorage.setItem('deck', JSON.stringify(Deck))
-      progressLength = JSON.parse(localStorage.getItem('deck'));
-      progress.setAttribute("value", progressLength.length);
+      startcode()
     }
     var obj = JSON.parse(localStorage.getItem('deck'));
     if (obj.length > 99) {
       modal.classList.add('is-active');
-      progressLength = JSON.parse(localStorage.getItem('deck'));
-      progress.setAttribute("value", progressLength.length);
+      startcode()
     } else if (obj.includes(cardarray.name)) {
       if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land")) {
         var Deck = JSON.parse(localStorage.getItem('deck'));
         Deck.push(cardarray.name);//Add the text 'item1' to Deck
         localStorage.setItem('deck', JSON.stringify(Deck))
         obj = JSON.parse(localStorage.getItem('deck'));
-        progressLength = JSON.parse(localStorage.getItem('deck'));
-        progress.setAttribute("value", progressLength.length);
+        startcode()
       } else {
         modal.classList.add('is-active');
         alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
-        progressLength = JSON.parse(localStorage.getItem('deck'));
-        progress.setAttribute("value", progressLength.length);
+        startcode()
 
       }
     } else {
@@ -279,8 +275,7 @@ function printCards(cardarray) {
       Deck.push(cardarray.name);//Add the text 'item1' to Deck
       localStorage.setItem('deck', JSON.stringify(Deck))
       obj = JSON.parse(localStorage.getItem('deck'));
-      progressLength = JSON.parse(localStorage.getItem('deck'));
-      progress.setAttribute("value", progressLength.length);
+      startcode()
 
 
     }
