@@ -8,11 +8,7 @@ var cardImg = document.querySelector("#cardImg");
 // sets modal to variable
 var modal = document.querySelector("#modalAlert");
 var closeButton = document.querySelector("#closeButton");
-var alertMessege = document.querySelector("#alertMessege");
-
-var progress = document.querySelector("#progress");
-
-
+var alertMessege = document.querySelector("#alertMessege")
 // Stores Prices
 var displayPriceUsd = (" ")
 var displayPriceUsdFoil = (" ")
@@ -21,7 +17,7 @@ var displayPriceEuroFoil = (" ")
 //Creates a Variable Outside of the code
 let cardNamesAuto = [];
 
-var exchangeRate = localStorage.getItem('Exchange');
+
 
 var Deck = [];
 
@@ -118,13 +114,11 @@ function cardInput(searchinput) {
   return;
 }
 
-
-
 function getCardPrice(cardarray) {
   //Gathers the prices from the API  
   cardPriceUsd = cardarray.prices.usd
   cardPriceUsdFoil = cardarray.prices.usd_foil
-
+  var exchangeRate = localStorage.getItem('Exchange')
   console.log(exchangeRate)
   cardPriceEuro = cardPriceUsd * exchangeRate;
   cardPriceEuro = cardPriceEuro.toString();
@@ -173,8 +167,6 @@ function getCardPrice(cardarray) {
   //Prints cards
   printCards(cardarray);
 }
-
-
 
 
 //function to print all the info to the screen
@@ -228,34 +220,31 @@ function printCards(cardarray) {
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
 
-  var obj = JSON.parse(localStorage.getItem('deck'));
-
-
+  
   linkButtonEl.addEventListener("click", function () {
-
     event.preventDefault();
-    progress.setAttribute("value", obj.length);
+    
     if (localStorage.getItem('deck') === null) {
       var Deck = []
       localStorage.setItem('deck', JSON.stringify(Deck))
-
+      
     }
-
+    var obj = JSON.parse(localStorage.getItem('deck'));
     if (obj.length > 99) {
       modal.classList.add('is-active');
-      alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
+      
     } else if (obj.includes(cardarray.name)) {
       if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land")) {
         var Deck = JSON.parse(localStorage.getItem('deck'));
         Deck.push(cardarray.name);//Add the text 'item1' to Deck
         localStorage.setItem('deck', JSON.stringify(Deck))
-        obj = JSON.parse(localStorage.getItem('deck'))
-
+        obj = JSON.parse(localStorage.getItem('deck'));
 
       } else {
 
         modal.classList.add('is-active');
         alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
+        
 
       }
     } else {
@@ -263,10 +252,7 @@ function printCards(cardarray) {
       Deck.push(cardarray.name);//Add the text 'item1' to Deck
       localStorage.setItem('deck', JSON.stringify(Deck))
       obj = JSON.parse(localStorage.getItem('deck'));
-      ;
     }
-
-    progress.setAttribute("value", obj.length);
 
   })
 
