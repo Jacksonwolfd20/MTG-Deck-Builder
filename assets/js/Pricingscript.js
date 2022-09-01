@@ -21,17 +21,14 @@ var Deck = [];
 
 var cardPriceFinal = 0
 
+progressLength = JSON.parse(localStorage.getItem('deck'));
+progress.setAttribute("value", progressLength.length);
 
-
-// Pulls from local storage to display the first card
 function firstSearch() {
-  //localStorage.getItem('indexSearch', searchInput);
-  //localStorage.getItem('indexUsdCheck', usdCheck);
-  //localStorage.getItem('indexEurCheck', eurCheck);
 
   var searchinput = localStorage.getItem('indexSearch')
 
-  //console.log(localStorage.getItem('indexSearch', searchInput));
+
 
   cardInput(searchinput);
 }
@@ -55,7 +52,6 @@ searchbtn.addEventListener("click", function () {
   event.preventDefault();
   // Get the card entereed
   var searchinput = $("#search-input").val().trim();
-  console.log(searchinput);
   //Verify a Card Name was entered
   if (searchinput === "" || searchinput == "undefined") {
     modal.classList.add('is-active');
@@ -63,8 +59,6 @@ searchbtn.addEventListener("click", function () {
   } else {
     // Switches the spaces with + symbol
     searchinput = additionSymbolAdd(searchinput);
-    //Test what is going to the api
-    console.log(searchinput);
     //Gets card shop info
     cardInput(searchinput);
     //Checks only one checkmark to determine the value of the other
@@ -82,17 +76,7 @@ searchbtn.addEventListener("click", function () {
 );
 
 
-//coding card img finder
-function cardImgcreator(cardarray) {
-  //Stores card Name
-  var cardRealName = cardarray.name
-  //Stores the img to be used later on
-  var cardImgTest = cardarray.image_uris.border_crop
-  //Starts To Get The Price
-  console.log(cardRealName);
-  //Test To see if the ID is called
-  console.log(cardImgTest);
-}
+
 
 
 //Gets card shop info
@@ -131,14 +115,9 @@ function cardInput(searchinput) {
 
         //Adds Showing of Results 
         resultTextEl.textContent = (" " + cardRealName);
-        //Sends Cards Real Name
-        console.log(cardRealName);
-        //Test To see if the ID is called
-        console.log(cardmarketid);
-        //img creator
-        cardImgcreator(cardarray);
 
-        
+
+
       }
     })
   return;
@@ -152,45 +131,29 @@ function getCardPrice(cardarray) {
   cardPriceEuroFoil = cardarray.prices.eur_foil
   //testing and pplying definitions to be used later
   if (cardPriceUsd === null && cardPriceUsdFoil === null) {
-    console.log("Normal card price is unavalible");
-    console.log("Foil card price is unavalible");
     displayPriceUsd = ("Normal card price is unavalible")
     displayPriceUsdFoil = ("Foil card price is unavalible")
   } else if (cardPriceUsd && cardPriceUsdFoil === null) {
-    console.log(" $ " + cardPriceUsd + "~");
-    console.log("Foil card price is unavalible");
     displayPriceUsd = (" $ " + cardPriceUsd + "~")
     displayPriceUsdFoil = ("Foil card price is unavalible")
   } else if (cardPriceUsd === null && cardPriceUsdFoil) {
-    console.log("Normal card price is unavalible");
-    console.log(" $ " + cardPriceUsdFoil + "~");
     displayPriceUsd = ("Normal card price is unavalible")
     displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
   } else {
-    console.log(" $ " + cardPriceUsd + "~");
-    console.log(" $ " + cardPriceUsdFoil + "~");
     displayPriceUsd = (" $ " + cardPriceUsd + "~")
     displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
   }
 
   if (cardPriceEuro === null && cardPriceEuroFoil === null) {
-    console.log("Normal card price is unavalible");
-    console.log("Foil card price is unavalible");
     displayPriceEuro = ("Normal card price is unavalible")
     displayPriceEuroFoil = ("Foil card price is unavalible")
   } else if (cardPriceEuro && cardPriceEuroFoil === null) {
-    console.log(" € " + cardPriceEuro + "~");
-    console.log("Foil card price is unavalible");
     displayPriceEuro = (" € " + cardPriceEuro + "~")
     displayPriceEuroFoil = ("Foil card price is unavalible")
   } else if (cardPriceEuro === null && cardPriceEuroFoil) {
-    console.log("Normal card price is unavalible");
-    console.log("Foil card price is € " + cardPriceEuroFoil + "~");
     displayPriceEuro = ("Normal card price is unavalible")
     displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
   } else {
-    console.log("Card price is € " + cardPriceEuro + "~");
-    console.log("Foil card price is € " + cardPriceEuroFoil + "~");
     displayPriceEuro = (" € " + cardPriceEuro + "~")
     displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
   }
@@ -200,8 +163,6 @@ function getCardPrice(cardarray) {
 
 //function to print all the info to the screen
 function printCards(cardarray) {
-
-  console.log(cardarray);
 
   var resultCard = document.createElement('div');
   resultCard.classList.add('box');
@@ -253,36 +214,46 @@ function printCards(cardarray) {
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
 
-
+  var progress = document.querySelector("#progress");
+  var progressLength = JSON.parse(localStorage.getItem('deck'));
   linkButtonEl.addEventListener("click", function () {
     event.preventDefault();
-    console.log(localStorage.getItem('deck'))
-    if(localStorage.getItem('deck') === null){
+    progress.setAttribute("value", progressLength.length);
+    if (localStorage.getItem('deck') === null) {
       var Deck = []
-        localStorage.setItem('deck', JSON.stringify(Deck))
+      localStorage.setItem('deck', JSON.stringify(Deck))
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
     }
     var obj = JSON.parse(localStorage.getItem('deck'));
-    console.log(localStorage.getItem('deck'))
     if (obj.length > 99) {
-      console.log("To Big")
       modal.classList.add('is-active');
-    } else if (obj.includes(cardarray.name) ) {
-      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land") ){
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
+    } else if (obj.includes(cardarray.name)) {
+      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land")) {
         var Deck = JSON.parse(localStorage.getItem('deck'));
         Deck.push(cardarray.name);//Add the text 'item1' to Deck
         localStorage.setItem('deck', JSON.stringify(Deck))
         obj = JSON.parse(localStorage.getItem('deck'));
-        console.log(obj)
-      }else{
+        progressLength = JSON.parse(localStorage.getItem('deck'));
+        progress.setAttribute("value", progressLength.length);
+      } else {
         modal.classList.add('is-active');
         alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
+        progressLength = JSON.parse(localStorage.getItem('deck'));
+        progress.setAttribute("value", progressLength.length);
+
       }
     } else {
       var Deck = JSON.parse(localStorage.getItem('deck'));
       Deck.push(cardarray.name);//Add the text 'item1' to Deck
       localStorage.setItem('deck', JSON.stringify(Deck))
       obj = JSON.parse(localStorage.getItem('deck'));
-      console.log(obj)
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
+
+
     }
 
   })
@@ -309,7 +280,6 @@ function allCardNames() {
       return response.json();
     })
     .then(data => {
-      console.log(data);
       //Stores the data to be used later on
       cardNamesAuto = data.data
       $('#search-input').autocomplete({
