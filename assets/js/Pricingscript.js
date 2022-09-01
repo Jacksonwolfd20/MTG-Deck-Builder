@@ -16,6 +16,7 @@ var displayPriceEuro = (" ")
 var displayPriceEuroFoil = (" ")
 //Creates a Variable Outside of the code
 let cardNamesAuto = [];
+var progress = document.querySelector("#progress");
 
 
 var exchangeRate = localStorage.getItem('Exchange');
@@ -24,6 +25,18 @@ var exchangeRate = localStorage.getItem('Exchange');
 var Deck = [];
 
 var cardPriceFinal = 0
+
+progressLength = JSON.parse(localStorage.getItem('deck'));
+progress.setAttribute("value", progressLength.length);
+
+function firstSearch() {
+
+  var searchinput = localStorage.getItem('indexSearch')
+
+
+
+  cardInput(searchinput);
+}
 
 
 
@@ -135,19 +148,15 @@ function getCardPrice(cardarray) {
   cardPriceEuroFoil = cardPriceEuroFoil.substring(0, 5);
 
 
-  //testing and applying definitions to be used later
+  //testing and pplying definitions to be used later
   if (cardPriceUsd === null && cardPriceUsdFoil === null) {
-
-    displayPriceUsd = ("Normal card price is unavailable")
-    displayPriceUsdFoil = ("Foil card price is unavailable")
-
+    displayPriceUsd = ("Normal card price is unavalible")
+    displayPriceUsdFoil = ("Foil card price is unavalible")
   } else if (cardPriceUsd && cardPriceUsdFoil === null) {
     displayPriceUsd = (" $ " + cardPriceUsd + "~")
-    displayPriceUsdFoil = ("Foil card price is unavailable")
+    displayPriceUsdFoil = ("Foil card price is unavalible")
   } else if (cardPriceUsd === null && cardPriceUsdFoil) {
-
-    displayPriceUsd = ("Normal card price is unavailable")
-
+    displayPriceUsd = ("Normal card price is unavalible")
     displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
   } else {
     displayPriceUsd = (" $ " + cardPriceUsd + "~")
@@ -155,24 +164,22 @@ function getCardPrice(cardarray) {
   }
 
   if (cardPriceEuro === null && cardPriceEuroFoil === null) {
-
-    displayPriceEuro = ("Normal card price is unavailable")
-    displayPriceEuroFoil = ("Foil card price is unavailable")
+    displayPriceEuro = ("Normal card price is unavalible")
+    displayPriceEuroFoil = ("Foil card price is unavalible")
   } else if (cardPriceEuro && cardPriceEuroFoil === null) {
     displayPriceEuro = (" € " + cardPriceEuro + "~")
-    displayPriceEuroFoil = ("Foil card price is unavailable")
+    displayPriceEuroFoil = ("Foil card price is unavalible")
   } else if (cardPriceEuro === null && cardPriceEuroFoil) {
-
-    displayPriceEuro = ("Normal card price is unavailable")
-
+    displayPriceEuro = ("Normal card price is unavalible")
     displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
   } else {
     displayPriceEuro = (" € " + cardPriceEuro + "~")
     displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
+	printCards(cardarray);
   }
-  //Prints cards
-  printCards(cardarray);
-}
+
+
+};
 
 
 //function to print all the info to the screen
@@ -189,6 +196,8 @@ function printCards(cardarray) {
   titleEl.classList.add("title");
 
   titleEl.textContent = cardarray.name;
+
+
 
   var bodyContentEl = document.createElement('p');
   bodyContentEl.innerHTML =
@@ -226,31 +235,35 @@ function printCards(cardarray) {
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
 
-  
+  progress = document.querySelector("#progress");
+  var progressLength = JSON.parse(localStorage.getItem('deck'));
   linkButtonEl.addEventListener("click", function () {
     event.preventDefault();
-    
+    progress.setAttribute("value", progressLength.length);
     if (localStorage.getItem('deck') === null) {
       var Deck = []
       localStorage.setItem('deck', JSON.stringify(Deck))
-
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
     }
     var obj = JSON.parse(localStorage.getItem('deck'));
     if (obj.length > 99) {
       modal.classList.add('is-active');
-
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
     } else if (obj.includes(cardarray.name)) {
       if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land")) {
         var Deck = JSON.parse(localStorage.getItem('deck'));
         Deck.push(cardarray.name);//Add the text 'item1' to Deck
         localStorage.setItem('deck', JSON.stringify(Deck))
         obj = JSON.parse(localStorage.getItem('deck'));
-
+        progressLength = JSON.parse(localStorage.getItem('deck'));
+        progress.setAttribute("value", progressLength.length);
       } else {
-
         modal.classList.add('is-active');
         alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
-
+        progressLength = JSON.parse(localStorage.getItem('deck'));
+        progress.setAttribute("value", progressLength.length);
 
       }
     } else {
@@ -258,6 +271,10 @@ function printCards(cardarray) {
       Deck.push(cardarray.name);//Add the text 'item1' to Deck
       localStorage.setItem('deck', JSON.stringify(Deck))
       obj = JSON.parse(localStorage.getItem('deck'));
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
+
+
     }
 
   })
@@ -302,5 +319,6 @@ function allCardNames() {
 }
 
 
-allCardNames();
 
+
+allCardNames();
