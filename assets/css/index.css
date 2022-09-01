@@ -30,8 +30,14 @@ label, .navbar-link, .navbar-item {
 
 .descriptionBox {
     font-size: large;
-    background-color: #fffdd0;
+    background-color: rgb(78,59,52);
+    color: #fffdd0;
 }
+
+#pHeader {
+    color: #fffdd0;
+}
+
 .image {
     position: relative;
     margin-left: auto;
