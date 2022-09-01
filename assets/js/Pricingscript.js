@@ -19,6 +19,8 @@ let cardNamesAuto = [];
 
 var Deck = [];
 
+var cardPriceFinal = 0
+
 
 
 // Pulls from local storage to display the first card
@@ -136,6 +138,7 @@ function cardInput(searchinput) {
         //img creator
         cardImgcreator(cardarray);
 
+        
       }
     })
   return;

@@ -37,30 +37,75 @@ function retrieveDeck() {
         var node = document.createTextNode("");
         node = oldDeck[i];
         var listItem = document.createElement("li");
-        listItem.classList.add('label');
+        listItem.classList.add('label', 'deletetext' + [i]);
+        listItem.setAttribute("id", "Card" + [i]);
         var RemoveButton = document.createElement("button");
-        
+        var countCards = [i]
         // prints card to the page
         listItem.append(node);
 
-        var removeButtonEl = document.createElement('a');
+        var removeButtonEl = document.createElement('button');
         removeButtonEl.textContent = 'Remove Card';
-        removeButtonEl.classList.add('button');
-
-
-
+        removeButtonEl.classList.add('button', 'deleteButton' + [i]);
         deckList.append(listItem, removeButtonEl);
+
+        var cardButtonSinglei = document.querySelector('.deleteButton' + [i]);
+        console.log("button" + [i])
+        var cardtextSinglei = document.querySelector('.deletetext' + [i]);
+        console.log("text" + [i])
+
+        cardButtonSinglei.addEventListener("click", function () {
+            cardButtonSinglei.remove('button');
+            console.log("button" + [i])
+            cardtextSinglei.textContent = ' ';
+            console.log("text" + [i])
+         })
+    }
+ 
+    for (var i = 0; i < countCards; i++) {
+        
+        var cardButtonSinglei = document.querySelector('.deleteButton' + [i]);
+        console.log("button" + [i])
+        var cardtextSinglei = document.querySelector('.deletetext' + [i]);
+        console.log("text" + [i])
+
+        cardButtonSinglei.addEventListener("click", function () {
+            cardButtonSinglei.remove('button');
+            console.log("button" + [i])
+            cardtextSinglei.textContent = ' ';
+            console.log("text" + [i])
+         })
+
     }
 
-    console.log(localStorage.getItem('deck'));
-};
+    var cardButtonSingle = document.querySelector('.deleteButton' + countCards);
+    var cardtextSingle = document.querySelector('.deletetext' + countCards);
+    cardButtonSingle.addEventListener("click", function () {
+        cardButtonSingle.remove('button');
+        cardtextSingle.textContent = ' ';
+    })
 
-clearbtn.addEventListener("click", function () { 
-      
-      localStorage.clear('deck')
 
-      console.log(localStorage.getItem('deck'))
-})
+    clearbtn.addEventListener("click", function () { 
+        var Deck = []
+        localStorage.setItem('deck', JSON.stringify(Deck))
+        console.log(localStorage.getItem('deck'))
+        for (var i = 0; i < countCards; i++) {
+        var cardText = document.querySelector('.deletetext' + [i]);
+        document.querySelector('.deleteButton' + [i]).innerHTML = ' ';
+        cardText.textContent = ' ';
+        var ButtonText = document.querySelector('.deleteButton' + [i]);
+        ButtonText.remove('button');
+        }
+        cardText = document.querySelector('.deletetext' + countCards);
+        document.querySelector('.deleteButton' + countCards).innerHTML = ' ';
+        cardText.textContent = ' ';
+        ButtonText = document.querySelector('.deleteButton' + countCards);
+        ButtonText.remove('button');
+        console.log(localStorage.getItem('deck'));
+}
+)}
+
 
 retrieveDeck();
 
