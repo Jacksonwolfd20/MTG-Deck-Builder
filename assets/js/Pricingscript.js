@@ -18,11 +18,15 @@ var displayPriceEuroFoil = (" ")
 let cardNamesAuto = [];
 
 
+var exchangeRate = localStorage.getItem('Exchange');
+
 
 var Deck = [];
 
 var cardPriceFinal = 0
 
+progressLength = JSON.parse(localStorage.getItem('deck'));
+progress.setAttribute("value", progressLength.length);
 
 
 function firstSearch() {
@@ -114,10 +118,13 @@ function cardInput(searchinput) {
   return;
 }
 
+
+
 function getCardPrice(cardarray) {
   //Gathers the prices from the API  
   cardPriceUsd = cardarray.prices.usd
   cardPriceUsdFoil = cardarray.prices.usd_foil
+
   var exchangeRate = localStorage.getItem('Exchange')
   console.log(exchangeRate)
   cardPriceEuro = cardPriceUsd * exchangeRate;
@@ -227,12 +234,12 @@ function printCards(cardarray) {
     if (localStorage.getItem('deck') === null) {
       var Deck = []
       localStorage.setItem('deck', JSON.stringify(Deck))
-      
+
     }
     var obj = JSON.parse(localStorage.getItem('deck'));
     if (obj.length > 99) {
       modal.classList.add('is-active');
-      
+
     } else if (obj.includes(cardarray.name)) {
       if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land")) {
         var Deck = JSON.parse(localStorage.getItem('deck'));
@@ -244,7 +251,7 @@ function printCards(cardarray) {
 
         modal.classList.add('is-active');
         alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
-        
+
 
       }
     } else {
@@ -295,4 +302,6 @@ function allCardNames() {
   return;
 }
 
+
 allCardNames();
+
