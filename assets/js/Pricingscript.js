@@ -29,7 +29,6 @@ function firstSearch() {
   var searchinput = localStorage.getItem('indexSearch')
 
 
-
   cardInput(searchinput);
 }
 
@@ -43,6 +42,9 @@ function additionSymbolAdd(myString) {
 closeButton.addEventListener("click", function () {
   modal.classList.remove("is-active");
 })
+
+
+
 
 //adds search functionality
 searchbtn.addEventListener("click", function () {
@@ -68,8 +70,9 @@ searchbtn.addEventListener("click", function () {
     }
   }
 
-}
-);
+
+});
+
 
 //Gets card shop info
 function cardInput(searchinput) {
@@ -90,10 +93,9 @@ function cardInput(searchinput) {
       var cardarray = data
       //Checks the card name
       var cardRealName = cardarray.name
-      //Check the card id
-      var cardmarketid = cardarray.cardmarket_id
       //see if there is actully a card under the name
       if (!cardarray.name) {
+
         resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
       } else {
         resultContentEl.textContent = '';
@@ -101,8 +103,7 @@ function cardInput(searchinput) {
         //Starts To Get The Price
         getCardPrice(cardarray);
 
-        //Prints cards
-        printCards(cardarray);
+
 
         //Adds Showing of Results 
         resultTextEl.textContent = (" " + cardRealName);
@@ -116,39 +117,71 @@ function getCardPrice(cardarray) {
   //Gathers the prices from the API  
   cardPriceUsd = cardarray.prices.usd
   cardPriceUsdFoil = cardarray.prices.usd_foil
-  cardPriceEuro = cardarray.prices.eur
-  cardPriceEuroFoil = cardarray.prices.eur_foil
-  //testing and applying definitions to be used later
-  if (cardPriceUsd === null && cardPriceUsdFoil === null) {
-    displayPriceUsd = ("Normal card price is unavailable")
-    displayPriceUsdFoil = ("Foil card price is unavailable")
-  } else if (cardPriceUsd && cardPriceUsdFoil === null) {
-    displayPriceUsd = (" $ " + cardPriceUsd + "~")
-    displayPriceUsdFoil = ("Foil card price is unavailable")
-  } else if (cardPriceUsd === null && cardPriceUsdFoil) {
-    displayPriceUsd = ("Normal card price is unavailable")
-    displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
-  } else {
-    displayPriceUsd = (" $ " + cardPriceUsd + "~")
-    displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
-  }
 
-  if (cardPriceEuro === null && cardPriceEuroFoil === null) {
-    displayPriceEuro = ("Normal card price is unavailable")
-    displayPriceEuroFoil = ("Foil card price is unavailable")
-  } else if (cardPriceEuro && cardPriceEuroFoil === null) {
-    displayPriceEuro = (" € " + cardPriceEuro + "~")
-    displayPriceEuroFoil = ("Foil card price is unavailable")
-  } else if (cardPriceEuro === null && cardPriceEuroFoil) {
-    displayPriceEuro = ("Normal card price is unavailable")
-    displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
-  } else {
-    displayPriceEuro = (" € " + cardPriceEuro + "~")
-    displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
-  }
+  var myHeaders = new Headers();
+  myHeaders.append("apikey", "uDNZOHIG8Ctv6Jar2ySnFWPZn0EuReP3");
+
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow',
+    headers: myHeaders
+  };
+
+  fetch("https://api.apilayer.com/currency_data/live?source=USD&currencies=EUR", requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      var exchangeRate = data.quotes.USDEUR
+
+      cardPriceEuro = cardPriceUsd * exchangeRate;
+      cardPriceEuro = cardPriceEuro.toString();
+      cardPriceEuro = cardPriceEuro.substring(0,5);
+
+      cardPriceEuroFoil = cardPriceUsdFoil * exchangeRate;
+      cardPriceEuroFoil = cardPriceEuroFoil.toString();
+      cardPriceEuroFoil = cardPriceEuroFoil.substring(0,5);
 
 
-};
+      //testing and applying definitions to be used later
+      if (cardPriceUsd === null && cardPriceUsdFoil === null) {
+
+        displayPriceUsd = ("Normal card price is unavailable")
+        displayPriceUsdFoil = ("Foil card price is unavailable")
+
+      } else if (cardPriceUsd && cardPriceUsdFoil === null) {
+        displayPriceUsd = (" $ " + cardPriceUsd + "~")
+        displayPriceUsdFoil = ("Foil card price is unavailable")
+      } else if (cardPriceUsd === null && cardPriceUsdFoil) {
+
+        displayPriceUsd = ("Normal card price is unavailable")
+
+        displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
+      } else {
+        displayPriceUsd = (" $ " + cardPriceUsd + "~")
+        displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
+      }
+
+      if (cardPriceEuro === null && cardPriceEuroFoil === null) {
+
+        displayPriceEuro = ("Normal card price is unavailable")
+        displayPriceEuroFoil = ("Foil card price is unavailable")
+      } else if (cardPriceEuro && cardPriceEuroFoil === null) {
+        displayPriceEuro = (" € " + cardPriceEuro + "~")
+        displayPriceEuroFoil = ("Foil card price is unavailable")
+      } else if (cardPriceEuro === null && cardPriceEuroFoil) {
+
+        displayPriceEuro = ("Normal card price is unavailable")
+
+        displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
+      } else {
+        displayPriceEuro = (" € " + cardPriceEuro + "~")
+        displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
+      }
+      //Prints cards
+      printCards(cardarray);
+    })
+
+}
+
 
 //function to print all the info to the screen
 function printCards(cardarray) {
@@ -195,6 +228,8 @@ function printCards(cardarray) {
   img.width = "250";
   img.height = "100";
 
+
+
   var linkButtonEl = document.createElement('a');
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
@@ -221,9 +256,9 @@ function printCards(cardarray) {
         Deck.push(cardarray.name);//Add the text 'item1' to Deck
         localStorage.setItem('deck', JSON.stringify(Deck))
         obj = JSON.parse(localStorage.getItem('deck'));
-        progressLength = JSON.parse(localStorage.getItem('deck'));
-        progress.setAttribute("value", progressLength.length);
+
       } else {
+
         modal.classList.add('is-active');
         alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
         progressLength = JSON.parse(localStorage.getItem('deck'));
@@ -235,9 +270,6 @@ function printCards(cardarray) {
       Deck.push(cardarray.name);//Add the text 'item1' to Deck
       localStorage.setItem('deck', JSON.stringify(Deck))
       obj = JSON.parse(localStorage.getItem('deck'));
-      progressLength = JSON.parse(localStorage.getItem('deck'));
-      progress.setAttribute("value", progressLength.length);
-
     }
 
   })
@@ -246,6 +278,8 @@ function printCards(cardarray) {
 
   resultContentEl.append(resultCard);
 }
+
+
 
 //Work in progress--
 function allCardNames() {
