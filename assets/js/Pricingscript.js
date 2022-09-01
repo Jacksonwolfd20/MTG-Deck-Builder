@@ -19,13 +19,15 @@ let cardNamesAuto = [];
 
 var Deck = [];
 
-localStorage.setItem('deck', JSON.stringify(Deck))
+var cardPriceFinal = 0
 
+progressLength = JSON.parse(localStorage.getItem('deck'));
+progress.setAttribute("value", progressLength.length);
 
-// Pulls from local storage to display the first card
 function firstSearch() {
 
   var searchinput = localStorage.getItem('indexSearch')
+
 
   cardInput(searchinput);
 }
@@ -52,7 +54,7 @@ searchbtn.addEventListener("click", function () {
   //Verify a Card Name was entered
   if (searchinput === "" || searchinput == "undefined") {
     modal.classList.add('is-active');
-    alertMessege.textContent = ("Sorry The Card Either Cant Be Found Or It Doesnt Exist Please Try Again")
+    alertMessege.textContent = ("Sorry You Must Enter A Card for the site to work");
   } else {
     // Switches the spaces with + symbol
     searchinput = additionSymbolAdd(searchinput);
@@ -68,7 +70,9 @@ searchbtn.addEventListener("click", function () {
     }
   }
 
+
 });
+
 
 //Gets card shop info
 function cardInput(searchinput) {
@@ -133,13 +137,17 @@ function getCardPrice(cardarray) {
   
   //testing and applying definitions to be used later
   if (cardPriceUsd === null && cardPriceUsdFoil === null) {
+
     displayPriceUsd = ("Normal card price is unavailable")
     displayPriceUsdFoil = ("Foil card price is unavailable")
+
   } else if (cardPriceUsd && cardPriceUsdFoil === null) {
     displayPriceUsd = (" $ " + cardPriceUsd + "~")
     displayPriceUsdFoil = ("Foil card price is unavailable")
   } else if (cardPriceUsd === null && cardPriceUsdFoil) {
+
     displayPriceUsd = ("Normal card price is unavailable")
+
     displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
   } else {
     displayPriceUsd = (" $ " + cardPriceUsd + "~")
@@ -147,13 +155,16 @@ function getCardPrice(cardarray) {
   }
 
   if (cardPriceEuro === null && cardPriceEuroFoil === null) {
+
     displayPriceEuro = ("Normal card price is unavailable")
     displayPriceEuroFoil = ("Foil card price is unavailable")
   } else if (cardPriceEuro && cardPriceEuroFoil === null) {
     displayPriceEuro = (" € " + cardPriceEuro + "~")
     displayPriceEuroFoil = ("Foil card price is unavailable")
   } else if (cardPriceEuro === null && cardPriceEuroFoil) {
+
     displayPriceEuro = ("Normal card price is unavailable")
+
     displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
   } else {
     displayPriceEuro = (" € " + cardPriceEuro + "~")
@@ -164,8 +175,6 @@ function getCardPrice(cardarray) {
 
 //function to print all the info to the screen
 function printCards(cardarray) {
-
-  console.log(cardarray);
 
   var resultCard = document.createElement('div');
   resultCard.classList.add('box');
@@ -215,23 +224,39 @@ function printCards(cardarray) {
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
 
-
+  var progress = document.querySelector("#progress");
+  var progressLength = JSON.parse(localStorage.getItem('deck'));
   linkButtonEl.addEventListener("click", function () {
-
-    localStorage.setItem('deck', JSON.stringify(Deck))
+    event.preventDefault();
+    progress.setAttribute("value", progressLength.length);
+    if (localStorage.getItem('deck') === null) {
+      var Deck = []
+      localStorage.setItem('deck', JSON.stringify(Deck))
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
+    }
     var obj = JSON.parse(localStorage.getItem('deck'));
-
     if (obj.length > 99) {
       modal.classList.add('is-active');
-    } else if (obj.includes(cardarray.name) ) {
-      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land") || cardarray.name.startsWith("Dragon's Approach" || cardarray.name.startsWith("Persistent Petitioners") || cardarray.name.startsWith("Rat Colony")|| cardarray.name.startsWith("Relentless Rats") || cardarray.name.startsWith("Shadowborn Apostle"))){
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
+    } else if (obj.includes(cardarray.name)) {
+      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land")) {
+        var Deck = JSON.parse(localStorage.getItem('deck'));
         Deck.push(cardarray.name);//Add the text 'item1' to Deck
         localStorage.setItem('deck', JSON.stringify(Deck))
         obj = JSON.parse(localStorage.getItem('deck'));
+
       }else{
+
         modal.classList.add('is-active');
+        alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
+        progressLength = JSON.parse(localStorage.getItem('deck'));
+        progress.setAttribute("value", progressLength.length);
+
       }
     } else {
+      var Deck = JSON.parse(localStorage.getItem('deck'));
       Deck.push(cardarray.name);//Add the text 'item1' to Deck
       localStorage.setItem('deck', JSON.stringify(Deck))
       obj = JSON.parse(localStorage.getItem('deck'));

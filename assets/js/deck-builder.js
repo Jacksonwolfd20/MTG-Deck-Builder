@@ -14,7 +14,21 @@ var addBtn = document.querySelector('#add-button');
 
 var deckList = document.querySelector('#deck-list');
 
+var clearbtn = document.querySelector("#clearButton")
+
 var newDeck = [];
+
+// set a prototype function to remove cards in the array later on
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 // when the page is opened, function checks for an existing deck and prints it to the page if it exists
 function retrieveDeck() {
@@ -28,20 +42,62 @@ function retrieveDeck() {
     oldDeck.sort();
     console.log(oldDeck);
     
+    let currentDeck = JSON.parse(localStorage.getItem('deck'));
+
     // loops once for each item in oldDeck
-    for (var i = 0; i < oldDeck.length; i++) {
+    for (let i = 0; i < oldDeck.length; i++) {
         // creates new <li> with the name of the card at oldDeck[i]
-        var node = document.createTextNode("");
+        let node = document.createTextNode("");
         node = oldDeck[i];
-        var listItem = document.createElement("li");
+        let listItem = document.createElement("li");
+        listItem.classList.add('label', 'deletetext' + [i]);
+        listItem.setAttribute("id", "Card" + [i]);
         
+        var countCards = [i]
         // prints card to the page
         listItem.append(node);
-        deckList.append(listItem);
-    }
 
-    console.log(localStorage.getItem('deck'));
-};
+        let removeButtonEl = document.createElement('button');
+        removeButtonEl.textContent = 'Remove Card';
+        removeButtonEl.classList.add('button', 'deleteButton' + [i]);
+        deckList.append(listItem, removeButtonEl);
+
+        let cardButtonSinglei = document.querySelector('.deleteButton' + [i]);
+        let cardtextSinglei = document.querySelector('.deletetext' + [i]);
+
+        //Clears specific cards from array then clears them visual
+        cardButtonSinglei.addEventListener("click", function () {
+            currentDeck.remove(node);
+            localStorage.setItem('deck', JSON.stringify(currentDeck))
+            cardButtonSinglei.remove('button');
+            cardtextSinglei.textContent = ' ';
+         })
+
+    }
+ 
+    
+
+    
+
+    //Clears the whole deck and sets the array to blank
+    clearbtn.addEventListener("click", function () { 
+        var Deck = []
+        localStorage.setItem('deck', JSON.stringify(Deck))
+        for (var i = 0; i < countCards; i++) {
+        var cardText = document.querySelector('.deletetext' + [i]);
+        document.querySelector('.deleteButton' + [i]).innerHTML = ' ';
+        cardText.textContent = ' ';
+        var ButtonText = document.querySelector('.deleteButton' + [i]);
+        ButtonText.remove('button');
+        }
+        cardText = document.querySelector('.deletetext' + countCards);
+        document.querySelector('.deleteButton' + countCards).innerHTML = ' ';
+        cardText.textContent = ' ';
+        ButtonText = document.querySelector('.deleteButton' + countCards);
+        ButtonText.remove('button');
+}
+)}
+
 
 retrieveDeck();
 
@@ -50,7 +106,6 @@ retrieveDeck();
 searchBtn.addEventListener('click', function() {
     event.preventDefault();
     responseEl.remove();
-
     // grabs the user's input from the search box
     var searchInput = searchBar.val().trim();
     console.log(searchInput);
@@ -65,13 +120,10 @@ searchBtn.addEventListener('click', function() {
         updateDisplay(searchInput);
     }
 });
-
-
 // checks for user input and returns card image to the page
 function updateDisplay(searchInput) {
     //
     var cardId = encodeURI(`https://api.scryfall.com/cards/named?fuzzy=${searchInput}`);
-
     fetch(cardId, {
         method: 'GET',
         credentials: 'same-origin',
@@ -83,7 +135,6 @@ function updateDisplay(searchInput) {
         var cardArray = data;
         var cardName = cardArray.name;
         var marketId = cardArray.cardmarket_id
-
         if (!cardName) {
             console.log('No results found');
             var responseEl = document.createElement('p');
@@ -97,20 +148,15 @@ function updateDisplay(searchInput) {
     })
     return;
 };
-
 function getCard(cardArray) {
     var cardImage = cardArray.image_uris.border_crop;
     cardDisplay.src = cardImage;
-
     var cardPriceUsd = cardArray.prices.usd;
     var cardPriceUsdFoil = cardArray.prices.usd_foil;
     var cardPriceEuro = cardArray.prices.eur;
     var cardPriceEuroFoil = cardArray.prices.eur_foil;
-
     if (
-
 };
-
 function allCardNames() {
     //
     var cardIdName = encodeURI(`https://api.scryfall.com/catalog/card-names`);
@@ -124,9 +170,7 @@ function allCardNames() {
         return response.json();
     }) .then (data => {
         console.log(data);
-
         cardNameAuto = data.data
-
         searchBar.autocomplete({
         maxResults: 10,
         source: function(request, response) {
@@ -139,7 +183,5 @@ function allCardNames() {
     });
     return;
 };
-
 allCardNames();
-
 */
