@@ -7,7 +7,7 @@ var standardBtn = document.querySelector('#standard-button');
 var foilBtn = document.querySelector('#foil-button');
 
 var deckList = document.querySelector('#deck-list');
-var clearbtn = document.querySelector("#clearButton");
+
 
 var newDeck = [];
 
@@ -76,33 +76,7 @@ function retrieveDeck() {
         })
     }
 
-    //Clears the whole deck and sets the array to blank
-    clearbtn.addEventListener("click", function () {
-        var Deck = [];
-        localStorage.setItem('deck', JSON.stringify(Deck));
-
-        for (var i = 0; i < countCards; i++) {
-            var cardText = document.querySelector('.deletetext' + [i]);
-            document.querySelector('.deleteButton' + [i]).innerHTML = ' ';
-            cardText.textContent = ' ';
-            var ButtonText = document.querySelector('.deleteButton' + [i]);
-            ButtonText.remove('button');
-        }
-
-
-        cardText = document.querySelector('.deletetext' + countCards);
-        document.querySelector('.deleteButton' + countCards).innerHTML = ' ';
-        cardText.textContent = ' ';
-        ButtonText = document.querySelector('.deleteButton' + countCards);
-        ButtonText.remove('button');
-
-        cardPreview.src = "../images/mtgcardback.jpg";
-        cardCost.innerHTML = '';
-        usdStandardCost = '';
-        usdFoilCost = '';
-        eurStandardCost = '';
-        eurFoilCost = '';
-    }),
+   
 
         $('.bigPicture').on('click', function () {
             var cardName = this.innerHTML;
