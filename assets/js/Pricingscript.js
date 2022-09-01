@@ -25,8 +25,7 @@ var Deck = [];
 
 var cardPriceFinal = 0
 
-progressLength = JSON.parse(localStorage.getItem('deck'));
-progress.setAttribute("value", progressLength.length);
+
 
 
 function firstSearch() {

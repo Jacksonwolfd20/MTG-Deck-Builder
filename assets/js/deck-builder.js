@@ -113,7 +113,7 @@ function retrieveDeck() {
         usdFoilCost = '';
         eurStandardCost = '';
         eurFoilCost = '';
-    }),
+    
 
     $('.bigPicture').on('click', function(){
         var cardName = this.innerHTML;
@@ -152,7 +152,7 @@ function retrieveDeck() {
             
         })
     })
-};
+
 
 // usd/eur/standard/foilBtn change classes on click
 usdBtn.addEventListener('click', function() {
