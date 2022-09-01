@@ -65,7 +65,6 @@ function retrieveDeck() {
         //Clears specific cards from array then clears them visual
         cardButtonSinglei.addEventListener("click", function () {
             
-
             let index = currentDeck.indexOf(node);
             if (index !== -1) {
                 const removed = currentDeck.splice(index, 1);
@@ -75,8 +74,6 @@ function retrieveDeck() {
             cardtextSinglei.textContent = ' ';
         })
     }
-
-   
 
         $('.bigPicture').on('click', function () {
             var cardName = this.innerHTML;
