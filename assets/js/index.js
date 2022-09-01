@@ -46,7 +46,7 @@ function onePrice(){
 
   if (exchangeRate === 0){
   var myHeaders = new Headers();
-  myHeaders.append("apikey", "HPdzHjiZDnilLjcBgTXzY4PkDB5TGLYf");
+  myHeaders.append("apikey", "rOwRbB3RBQuPN114biA4gCi5Nru0kSw8");
 
   var requestOptions = {
     method: 'GET',
