@@ -29,6 +29,7 @@ function firstSearch() {
   var searchinput = localStorage.getItem('indexSearch')
 
 
+
   cardInput(searchinput);
 }
 
@@ -71,7 +72,11 @@ searchbtn.addEventListener("click", function () {
   }
 
 
-});
+}
+);
+
+
+
 
 
 //Gets card shop info
@@ -93,9 +98,10 @@ function cardInput(searchinput) {
       var cardarray = data
       //Checks the card name
       var cardRealName = cardarray.name
+      //Check the card id
+      var cardmarketid = cardarray.cardmarket_id
       //see if there is actully a card under the name
       if (!cardarray.name) {
-
         resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
       } else {
         resultContentEl.textContent = '';
@@ -109,6 +115,8 @@ function cardInput(searchinput) {
         //Adds Showing of Results 
         resultTextEl.textContent = (" " + cardRealName);
 
+
+
       }
     })
   return;
@@ -118,36 +126,17 @@ function getCardPrice(cardarray) {
   //Gathers the prices from the API  
   cardPriceUsd = cardarray.prices.usd
   cardPriceUsdFoil = cardarray.prices.usd_foil
-
-  var exchangeQuery = encodeURI(`https://www.freeforexapi.com/api/live?pairs=USDEUR`);
-
-  fetch(exchangeQuery, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-  .then((response) => response.json())
-  .then((data) => console.log(data));
-
-  var exchangeRate = exchangeQuery.data.rate
-
-  cardPriceEuro = cardPriceUsd * exchangeRate;
-  cardPriceEuroFoil = cardPriceUsdFoil * exchangeRate;
-  
+  cardPriceEuro = cardarray.prices.eur
+  cardPriceEuroFoil = cardarray.prices.eur_foil
   //testing and applying definitions to be used later
   if (cardPriceUsd === null && cardPriceUsdFoil === null) {
-
     displayPriceUsd = ("Normal card price is unavailable")
     displayPriceUsdFoil = ("Foil card price is unavailable")
-
   } else if (cardPriceUsd && cardPriceUsdFoil === null) {
     displayPriceUsd = (" $ " + cardPriceUsd + "~")
     displayPriceUsdFoil = ("Foil card price is unavailable")
   } else if (cardPriceUsd === null && cardPriceUsdFoil) {
-
     displayPriceUsd = ("Normal card price is unavailable")
-
     displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
   } else {
     displayPriceUsd = (" $ " + cardPriceUsd + "~")
@@ -155,21 +144,19 @@ function getCardPrice(cardarray) {
   }
 
   if (cardPriceEuro === null && cardPriceEuroFoil === null) {
-
     displayPriceEuro = ("Normal card price is unavailable")
     displayPriceEuroFoil = ("Foil card price is unavailable")
   } else if (cardPriceEuro && cardPriceEuroFoil === null) {
     displayPriceEuro = (" € " + cardPriceEuro + "~")
     displayPriceEuroFoil = ("Foil card price is unavailable")
   } else if (cardPriceEuro === null && cardPriceEuroFoil) {
-
     displayPriceEuro = ("Normal card price is unavailable")
-
     displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
   } else {
     displayPriceEuro = (" € " + cardPriceEuro + "~")
     displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
   }
+
 
 };
 
@@ -188,6 +175,8 @@ function printCards(cardarray) {
 
   titleEl.textContent = cardarray.name;
 
+
+
   var bodyContentEl = document.createElement('p');
   bodyContentEl.innerHTML =
     '<strong>Card Type:</strong> ' + cardarray.type_line + '<br/>';
@@ -198,9 +187,9 @@ function printCards(cardarray) {
       '<strong>Card Foil Price:</strong> ' + displayPriceUsdFoil + '<br/>';
   } else {
     bodyContentEl.innerHTML +=
-      '<strong>Card Price:</strong> ' + displayPriceEuro +  '<a href="https://www.freeforexapi.com"><img alt="Free Forex API" src="https://www.freeforexapi.com/Images/link.png" height="20"> </a>' + '<br/>';
+      '<strong>Card Price:</strong> ' + displayPriceEuro + '<br/>';
     bodyContentEl.innerHTML +=
-      '<strong>Card Foil Price:</strong> ' + displayPriceEuroFoil + +  '<a href="https://www.freeforexapi.com"><img alt="Free Forex API" src="https://www.freeforexapi.com/Images/link.png" height="20"> </a>' + '<br/>';
+      '<strong>Card Foil Price:</strong> ' + displayPriceEuroFoil + '<br/>';
   }
 
   if (cardarray.oracle_text) {
@@ -246,9 +235,9 @@ function printCards(cardarray) {
         Deck.push(cardarray.name);//Add the text 'item1' to Deck
         localStorage.setItem('deck', JSON.stringify(Deck))
         obj = JSON.parse(localStorage.getItem('deck'));
-
-      }else{
-
+        progressLength = JSON.parse(localStorage.getItem('deck'));
+        progress.setAttribute("value", progressLength.length);
+      } else {
         modal.classList.add('is-active');
         alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
         progressLength = JSON.parse(localStorage.getItem('deck'));
@@ -260,6 +249,10 @@ function printCards(cardarray) {
       Deck.push(cardarray.name);//Add the text 'item1' to Deck
       localStorage.setItem('deck', JSON.stringify(Deck))
       obj = JSON.parse(localStorage.getItem('deck'));
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
+
+
     }
 
   })
