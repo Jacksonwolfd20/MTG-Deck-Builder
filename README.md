@@ -3,4 +3,4 @@ Magic the Gathering Deck Builder is a website that will allow you to build a com
 
 Link to live deployed site: https://jacksonwolfd20.github.io/MTG-Deck-Builder/
 
-![ScreenShot]./assets/images/siteScreenShot.png
+![ScreenShot](./assets/images/siteScreenShot.png)
