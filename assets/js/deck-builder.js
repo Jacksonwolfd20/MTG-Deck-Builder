@@ -14,6 +14,8 @@ var addBtn = document.querySelector('#add-button');
 
 var deckList = document.querySelector('#deck-list');
 
+clearbtn = document.querySelector("#clearButton")
+
 var newDeck = [];
 
 
@@ -35,6 +37,7 @@ function retrieveDeck() {
         var node = document.createTextNode("");
         node = oldDeck[i];
         var listItem = document.createElement("li");
+        listItem.classList.add('label');
         var RemoveButton = document.createElement("button");
         
         // prints card to the page
@@ -51,6 +54,13 @@ function retrieveDeck() {
 
     console.log(localStorage.getItem('deck'));
 };
+
+clearbtn.addEventListener("click", function () { 
+      
+      localStorage.clear('deck')
+
+      console.log(localStorage.getItem('deck'))
+})
 
 retrieveDeck();
 

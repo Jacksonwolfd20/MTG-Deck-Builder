@@ -254,7 +254,10 @@ function printCards(cardarray) {
   linkButtonEl.addEventListener("click", function () {
     event.preventDefault();
     console.log(localStorage.getItem('deck'))
-    
+    if(localStorage.getItem('deck') === null){
+      var Deck = []
+        localStorage.setItem('deck', JSON.stringify(Deck))
+    }
     var obj = JSON.parse(localStorage.getItem('deck'));
     console.log(localStorage.getItem('deck'))
     if (obj.length > 99) {

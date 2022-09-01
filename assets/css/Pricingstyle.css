@@ -70,3 +70,7 @@ p {
 .custom-modal{
     background-color: rgb(78,59,52);
 }
+
+html {
+    background-image: url(../images/mtgbackground.jpg);
+}
