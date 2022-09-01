@@ -242,9 +242,6 @@ function printCards(cardarray) {
   var linkButtonEl = document.createElement('a');
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
-
-  progress = document.querySelector("#progress");
-  var progressLength = JSON.parse(localStorage.getItem('deck'));
   linkButtonEl.addEventListener("click", function () {
     event.preventDefault();
     startcode()
