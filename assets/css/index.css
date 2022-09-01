@@ -20,6 +20,10 @@ html {
     background-color: rgb(241, 173, 100);
 }
 
+#date {
+    color: #fffdd0;
+}
+
 label, .navbar-link, .navbar-item {
     color: #fffdd0;
 }
