@@ -103,8 +103,7 @@ function cardInput(searchinput) {
         //Starts To Get The Price
         getCardPrice(cardarray);
 
-        //Prints cards
-        printCards(cardarray);
+
 
         //Adds Showing of Results 
         resultTextEl.textContent = (" " + cardRealName);
@@ -119,59 +118,70 @@ function getCardPrice(cardarray) {
   cardPriceUsd = cardarray.prices.usd
   cardPriceUsdFoil = cardarray.prices.usd_foil
 
-  var exchangeQuery = encodeURI(`https://www.freeforexapi.com/api/live?pairs=USDEUR`);
+  var myHeaders = new Headers();
+  myHeaders.append("apikey", "uDNZOHIG8Ctv6Jar2ySnFWPZn0EuReP3");
 
-  fetch(exchangeQuery, {
-    method: 'GET', //GET is the default.
-    credentials: 'same-origin', // include, *same-origin, omit
-    redirect: 'follow', // manual, *follow, error
-    cache: 'reload'  // Refresh the cache
-  })
-  .then((response) => response.json())
-  .then((data) => console.log(data));
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow',
+    headers: myHeaders
+  };
 
-  var exchangeRate = exchangeQuery.data.rate
+  fetch("https://api.apilayer.com/currency_data/live?source=USD&currencies=EUR", requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      var exchangeRate = data.quotes.USDEUR
 
-  cardPriceEuro = cardPriceUsd * exchangeRate;
-  cardPriceEuroFoil = cardPriceUsdFoil * exchangeRate;
-  
-  //testing and applying definitions to be used later
-  if (cardPriceUsd === null && cardPriceUsdFoil === null) {
+      cardPriceEuro = cardPriceUsd * exchangeRate;
+      cardPriceEuro = cardPriceEuro.toString();
+      cardPriceEuro = cardPriceEuro.substring(0,5);
 
-    displayPriceUsd = ("Normal card price is unavailable")
-    displayPriceUsdFoil = ("Foil card price is unavailable")
+      cardPriceEuroFoil = cardPriceUsdFoil * exchangeRate;
+      cardPriceEuroFoil = cardPriceEuroFoil.toString();
+      cardPriceEuroFoil = cardPriceEuroFoil.substring(0,5);
 
-  } else if (cardPriceUsd && cardPriceUsdFoil === null) {
-    displayPriceUsd = (" $ " + cardPriceUsd + "~")
-    displayPriceUsdFoil = ("Foil card price is unavailable")
-  } else if (cardPriceUsd === null && cardPriceUsdFoil) {
 
-    displayPriceUsd = ("Normal card price is unavailable")
+      //testing and applying definitions to be used later
+      if (cardPriceUsd === null && cardPriceUsdFoil === null) {
 
-    displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
-  } else {
-    displayPriceUsd = (" $ " + cardPriceUsd + "~")
-    displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
-  }
+        displayPriceUsd = ("Normal card price is unavailable")
+        displayPriceUsdFoil = ("Foil card price is unavailable")
 
-  if (cardPriceEuro === null && cardPriceEuroFoil === null) {
+      } else if (cardPriceUsd && cardPriceUsdFoil === null) {
+        displayPriceUsd = (" $ " + cardPriceUsd + "~")
+        displayPriceUsdFoil = ("Foil card price is unavailable")
+      } else if (cardPriceUsd === null && cardPriceUsdFoil) {
 
-    displayPriceEuro = ("Normal card price is unavailable")
-    displayPriceEuroFoil = ("Foil card price is unavailable")
-  } else if (cardPriceEuro && cardPriceEuroFoil === null) {
-    displayPriceEuro = (" € " + cardPriceEuro + "~")
-    displayPriceEuroFoil = ("Foil card price is unavailable")
-  } else if (cardPriceEuro === null && cardPriceEuroFoil) {
+        displayPriceUsd = ("Normal card price is unavailable")
 
-    displayPriceEuro = ("Normal card price is unavailable")
+        displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
+      } else {
+        displayPriceUsd = (" $ " + cardPriceUsd + "~")
+        displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
+      }
 
-    displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
-  } else {
-    displayPriceEuro = (" € " + cardPriceEuro + "~")
-    displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
-  }
+      if (cardPriceEuro === null && cardPriceEuroFoil === null) {
 
-};
+        displayPriceEuro = ("Normal card price is unavailable")
+        displayPriceEuroFoil = ("Foil card price is unavailable")
+      } else if (cardPriceEuro && cardPriceEuroFoil === null) {
+        displayPriceEuro = (" € " + cardPriceEuro + "~")
+        displayPriceEuroFoil = ("Foil card price is unavailable")
+      } else if (cardPriceEuro === null && cardPriceEuroFoil) {
+
+        displayPriceEuro = ("Normal card price is unavailable")
+
+        displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
+      } else {
+        displayPriceEuro = (" € " + cardPriceEuro + "~")
+        displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
+      }
+      //Prints cards
+      printCards(cardarray);
+    })
+
+}
+
 
 //function to print all the info to the screen
 function printCards(cardarray) {
@@ -198,9 +208,9 @@ function printCards(cardarray) {
       '<strong>Card Foil Price:</strong> ' + displayPriceUsdFoil + '<br/>';
   } else {
     bodyContentEl.innerHTML +=
-      '<strong>Card Price:</strong> ' + displayPriceEuro +  '<a href="https://www.freeforexapi.com"><img alt="Free Forex API" src="https://www.freeforexapi.com/Images/link.png" height="20"> </a>' + '<br/>';
+      '<strong>Card Price:</strong> ' + displayPriceEuro + '<br/>';
     bodyContentEl.innerHTML +=
-      '<strong>Card Foil Price:</strong> ' + displayPriceEuroFoil + +  '<a href="https://www.freeforexapi.com"><img alt="Free Forex API" src="https://www.freeforexapi.com/Images/link.png" height="20"> </a>' + '<br/>';
+      '<strong>Card Foil Price:</strong> ' + displayPriceEuroFoil + '<br/>';
   }
 
   if (cardarray.oracle_text) {
@@ -247,7 +257,7 @@ function printCards(cardarray) {
         localStorage.setItem('deck', JSON.stringify(Deck))
         obj = JSON.parse(localStorage.getItem('deck'));
 
-      }else{
+      } else {
 
         modal.classList.add('is-active');
         alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
