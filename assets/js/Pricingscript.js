@@ -23,11 +23,19 @@ var exchangeRate = localStorage.getItem('Exchange');
 
 
 var Deck = [];
-
+progressLength = JSON.parse(localStorage.getItem('deck'));
 var cardPriceFinal = 0
 
-progressLength = JSON.parse(localStorage.getItem('deck'));
-progress.setAttribute("value", progressLength.length);
+startcode()
+function startcode(){
+if (progressLength === null){
+  progressLength = []
+  progress.setAttribute("value", progressLength.length);
+} else{
+  progressLength = JSON.parse(localStorage.getItem('deck'));
+  progress.setAttribute("value", progressLength.length);
+}
+}
 
 function firstSearch() {
 
