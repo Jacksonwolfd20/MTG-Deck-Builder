@@ -18,9 +18,7 @@ var displayPriceEuroFoil = (" ")
 let cardNamesAuto = [];
 var progress = document.querySelector("#progress");
 
-
 var exchangeRate = localStorage.getItem('Exchange');
-
 
 var Deck = [];
 var progressLength = JSON.parse(localStorage.getItem('deck'));
@@ -41,20 +39,16 @@ function firstSearch() {
 
   var searchinput = localStorage.getItem('indexSearch')
 
-
-
   cardInput(searchinput);
+
 }
-
-
-
 
 function firstSearch() {
 
   var searchinput = localStorage.getItem('indexSearch')
 
-
   cardInput(searchinput);
+
 }
 
 firstSearch()
@@ -67,9 +61,6 @@ function additionSymbolAdd(myString) {
 closeButton.addEventListener("click", function () {
   modal.classList.remove("is-active");
 })
-
-
-
 
 //adds search functionality
 searchbtn.addEventListener("click", function () {
@@ -95,9 +86,7 @@ searchbtn.addEventListener("click", function () {
     }
   }
 
-
 });
-
 
 //Gets card shop info
 function cardInput(searchinput) {
@@ -128,8 +117,6 @@ function cardInput(searchinput) {
         //Starts To Get The Price
         getCardPrice(cardarray);
 
-
-
         //Adds Showing of Results 
         resultTextEl.textContent = (" " + cardRealName);
 
@@ -137,8 +124,6 @@ function cardInput(searchinput) {
     })
   return;
 }
-
-
 
 function getCardPrice(cardarray) {
   //Gathers the prices from the API  
@@ -154,7 +139,6 @@ function getCardPrice(cardarray) {
   cardPriceEuroFoil = cardPriceUsdFoil * exchangeRate;
   cardPriceEuroFoil = cardPriceEuroFoil.toString();
   cardPriceEuroFoil = cardPriceEuroFoil.substring(0, 5);
-
 
   //testing and pplying definitions to be used later
   if (cardPriceUsd === null && cardPriceUsdFoil === null) {
@@ -186,9 +170,7 @@ function getCardPrice(cardarray) {
 	printCards(cardarray);
   }
 
-
 };
-
 
 //function to print all the info to the screen
 function printCards(cardarray) {
@@ -204,8 +186,6 @@ function printCards(cardarray) {
   titleEl.classList.add("title");
 
   titleEl.textContent = cardarray.name;
-
-
 
   var bodyContentEl = document.createElement('p');
   bodyContentEl.innerHTML =
@@ -274,7 +254,6 @@ function printCards(cardarray) {
       obj = JSON.parse(localStorage.getItem('deck'));
       startcode()
 
-
     }
 
   })
@@ -283,7 +262,6 @@ function printCards(cardarray) {
 
   resultContentEl.append(resultCard);
 }
-
 
 
 //Work in progress--
@@ -317,8 +295,5 @@ function allCardNames() {
 
   return;
 }
-
-
-
 
 allCardNames();
