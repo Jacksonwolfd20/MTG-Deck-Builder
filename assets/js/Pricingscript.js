@@ -17,21 +17,20 @@ var displayPriceEuroFoil = (" ")
 //Creates a Variable Outside of the code
 let cardNamesAuto = [];
 
+var exchangeRate = localStorage.getItem('Exchange');
+
 var Deck = [];
 
 var cardPriceFinal = 0
 
+progressLength = JSON.parse(localStorage.getItem('deck'));
+progress.setAttribute("value", progressLength.length);
 
 
-// Pulls from local storage to display the first card
 function firstSearch() {
-  //localStorage.getItem('indexSearch', searchInput);
-  //localStorage.getItem('indexUsdCheck', usdCheck);
-  //localStorage.getItem('indexEurCheck', eurCheck);
 
   var searchinput = localStorage.getItem('indexSearch')
 
-  //console.log(localStorage.getItem('indexSearch', searchInput));
 
   cardInput(searchinput);
 }
@@ -55,7 +54,6 @@ searchbtn.addEventListener("click", function () {
   event.preventDefault();
   // Get the card entereed
   var searchinput = $("#search-input").val().trim();
-  console.log(searchinput);
   //Verify a Card Name was entered
   if (searchinput === "" || searchinput == "undefined") {
     modal.classList.add('is-active');
@@ -63,8 +61,6 @@ searchbtn.addEventListener("click", function () {
   } else {
     // Switches the spaces with + symbol
     searchinput = additionSymbolAdd(searchinput);
-    //Test what is going to the api
-    console.log(searchinput);
     //Gets card shop info
     cardInput(searchinput);
     //Checks only one checkmark to determine the value of the other
@@ -78,21 +74,7 @@ searchbtn.addEventListener("click", function () {
   }
 
 
-}
-);
-
-
-//coding card img finder
-function cardImgcreator(cardarray) {
-  //Stores card Name
-  var cardRealName = cardarray.name
-  //Stores the img to be used later on
-  var cardImgTest = cardarray.image_uris.border_crop
-  //Starts To Get The Price
-  console.log(cardRealName);
-  //Test To see if the ID is called
-  console.log(cardImgTest);
-}
+});
 
 
 //Gets card shop info
@@ -114,11 +96,9 @@ function cardInput(searchinput) {
       var cardarray = data
       //Checks the card name
       var cardRealName = cardarray.name
-      //Check the card id
-      var cardmarketid = cardarray.cardmarket_id
       //see if there is actully a card under the name
       if (!cardarray.name) {
-        console.log('No results found!');
+
         resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
       } else {
         resultContentEl.textContent = '';
@@ -126,82 +106,77 @@ function cardInput(searchinput) {
         //Starts To Get The Price
         getCardPrice(cardarray);
 
-        //Prints cards
-        printCards(cardarray);
+
 
         //Adds Showing of Results 
         resultTextEl.textContent = (" " + cardRealName);
-        //Sends Cards Real Name
-        console.log(cardRealName);
-        //Test To see if the ID is called
-        console.log(cardmarketid);
-        //img creator
-        cardImgcreator(cardarray);
 
-        
       }
     })
   return;
 }
 
+
+
 function getCardPrice(cardarray) {
   //Gathers the prices from the API  
   cardPriceUsd = cardarray.prices.usd
   cardPriceUsdFoil = cardarray.prices.usd_foil
-  cardPriceEuro = cardarray.prices.eur
-  cardPriceEuroFoil = cardarray.prices.eur_foil
-  //testing and pplying definitions to be used later
-  if (cardPriceUsd === null && cardPriceUsdFoil === null) {
-    console.log("Normal card price is unavalible");
-    console.log("Foil card price is unavalible");
-    displayPriceUsd = ("Normal card price is unavalible")
-    displayPriceUsdFoil = ("Foil card price is unavalible")
-  } else if (cardPriceUsd && cardPriceUsdFoil === null) {
-    console.log(" $ " + cardPriceUsd + "~");
-    console.log("Foil card price is unavalible");
-    displayPriceUsd = (" $ " + cardPriceUsd + "~")
-    displayPriceUsdFoil = ("Foil card price is unavalible")
-  } else if (cardPriceUsd === null && cardPriceUsdFoil) {
-    console.log("Normal card price is unavalible");
-    console.log(" $ " + cardPriceUsdFoil + "~");
-    displayPriceUsd = ("Normal card price is unavalible")
-    displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
-  } else {
-    console.log(" $ " + cardPriceUsd + "~");
-    console.log(" $ " + cardPriceUsdFoil + "~");
-    displayPriceUsd = (" $ " + cardPriceUsd + "~")
-    displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
-  }
 
-  if (cardPriceEuro === null && cardPriceEuroFoil === null) {
-    console.log("Normal card price is unavalible");
-    console.log("Foil card price is unavalible");
-    displayPriceEuro = ("Normal card price is unavalible")
-    displayPriceEuroFoil = ("Foil card price is unavalible")
-  } else if (cardPriceEuro && cardPriceEuroFoil === null) {
-    console.log(" € " + cardPriceEuro + "~");
-    console.log("Foil card price is unavalible");
-    displayPriceEuro = (" € " + cardPriceEuro + "~")
-    displayPriceEuroFoil = ("Foil card price is unavalible")
-  } else if (cardPriceEuro === null && cardPriceEuroFoil) {
-    console.log("Normal card price is unavalible");
-    console.log("Foil card price is € " + cardPriceEuroFoil + "~");
-    displayPriceEuro = ("Normal card price is unavalible")
-    displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
-  } else {
-    console.log("Card price is € " + cardPriceEuro + "~");
-    console.log("Foil card price is € " + cardPriceEuroFoil + "~");
-    displayPriceEuro = (" € " + cardPriceEuro + "~")
-    displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
-  }
+      console.log(exchangeRate)
+      cardPriceEuro = cardPriceUsd * exchangeRate;
+      cardPriceEuro = cardPriceEuro.toString();
+      cardPriceEuro = cardPriceEuro.substring(0,5);
+
+      cardPriceEuroFoil = cardPriceUsdFoil * exchangeRate;
+      cardPriceEuroFoil = cardPriceEuroFoil.toString();
+      cardPriceEuroFoil = cardPriceEuroFoil.substring(0,5);
 
 
-};
+      //testing and applying definitions to be used later
+      if (cardPriceUsd === null && cardPriceUsdFoil === null) {
+
+        displayPriceUsd = ("Normal card price is unavailable")
+        displayPriceUsdFoil = ("Foil card price is unavailable")
+
+      } else if (cardPriceUsd && cardPriceUsdFoil === null) {
+        displayPriceUsd = (" $ " + cardPriceUsd + "~")
+        displayPriceUsdFoil = ("Foil card price is unavailable")
+      } else if (cardPriceUsd === null && cardPriceUsdFoil) {
+
+        displayPriceUsd = ("Normal card price is unavailable")
+
+        displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
+      } else {
+        displayPriceUsd = (" $ " + cardPriceUsd + "~")
+        displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
+      }
+
+      if (cardPriceEuro === null && cardPriceEuroFoil === null) {
+
+        displayPriceEuro = ("Normal card price is unavailable")
+        displayPriceEuroFoil = ("Foil card price is unavailable")
+      } else if (cardPriceEuro && cardPriceEuroFoil === null) {
+        displayPriceEuro = (" € " + cardPriceEuro + "~")
+        displayPriceEuroFoil = ("Foil card price is unavailable")
+      } else if (cardPriceEuro === null && cardPriceEuroFoil) {
+
+        displayPriceEuro = ("Normal card price is unavailable")
+
+        displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
+      } else {
+        displayPriceEuro = (" € " + cardPriceEuro + "~")
+        displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
+      }
+      //Prints cards
+      printCards(cardarray);
+    }
+
+
+
 
 //function to print all the info to the screen
 function printCards(cardarray) {
-
-  console.log(cardarray);
 
   var resultCard = document.createElement('div');
   resultCard.classList.add('box');
@@ -214,8 +189,6 @@ function printCards(cardarray) {
   titleEl.classList.add("title");
 
   titleEl.textContent = cardarray.name;
-
-
 
   var bodyContentEl = document.createElement('p');
   bodyContentEl.innerHTML =
@@ -253,36 +226,42 @@ function printCards(cardarray) {
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
 
-
+  var progress = document.querySelector("#progress");
+  var progressLength = JSON.parse(localStorage.getItem('deck'));
   linkButtonEl.addEventListener("click", function () {
     event.preventDefault();
-    console.log(localStorage.getItem('deck'))
-    if(localStorage.getItem('deck') === null){
+    progress.setAttribute("value", progressLength.length);
+    if (localStorage.getItem('deck') === null) {
       var Deck = []
-        localStorage.setItem('deck', JSON.stringify(Deck))
+      localStorage.setItem('deck', JSON.stringify(Deck))
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
     }
     var obj = JSON.parse(localStorage.getItem('deck'));
-    console.log(localStorage.getItem('deck'))
     if (obj.length > 99) {
-      console.log("To Big")
       modal.classList.add('is-active');
-    } else if (obj.includes(cardarray.name) ) {
-      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land") ){
+      progressLength = JSON.parse(localStorage.getItem('deck'));
+      progress.setAttribute("value", progressLength.length);
+    } else if (obj.includes(cardarray.name)) {
+      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land")) {
         var Deck = JSON.parse(localStorage.getItem('deck'));
         Deck.push(cardarray.name);//Add the text 'item1' to Deck
         localStorage.setItem('deck', JSON.stringify(Deck))
         obj = JSON.parse(localStorage.getItem('deck'));
-        console.log(obj)
-      }else{
+
+      } else {
+
         modal.classList.add('is-active');
         alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
+        progressLength = JSON.parse(localStorage.getItem('deck'));
+        progress.setAttribute("value", progressLength.length);
+
       }
     } else {
       var Deck = JSON.parse(localStorage.getItem('deck'));
       Deck.push(cardarray.name);//Add the text 'item1' to Deck
       localStorage.setItem('deck', JSON.stringify(Deck))
       obj = JSON.parse(localStorage.getItem('deck'));
-      console.log(obj)
     }
 
   })
@@ -309,7 +288,6 @@ function allCardNames() {
       return response.json();
     })
     .then(data => {
-      console.log(data);
       //Stores the data to be used later on
       cardNamesAuto = data.data
       $('#search-input').autocomplete({
@@ -327,18 +305,4 @@ function allCardNames() {
   return;
 }
 
-
-
-
 allCardNames();
-
-
-
-
-
-
-
-
-
-
-

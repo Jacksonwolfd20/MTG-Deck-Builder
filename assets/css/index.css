@@ -20,14 +20,24 @@ html {
     background-color: rgb(241, 173, 100);
 }
 
+#date {
+    color: #fffdd0;
+}
+
 label, .navbar-link, .navbar-item {
     color: #fffdd0;
 }
 
 .descriptionBox {
     font-size: large;
-    background-color: #fffdd0;
+    background-color: rgb(78,59,52);
+    color: #fffdd0;
 }
+
+#pHeader {
+    color: #fffdd0;
+}
+
 .image {
     position: relative;
     margin-left: auto;

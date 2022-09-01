@@ -1,19 +1,144 @@
+var cardPreview = document.querySelector('#card-preview');
+var cardCost = document.querySelector('#card-cost');
+
 var usdBtn = document.querySelector('#usd-button');
 var eurBtn = document.querySelector('#eur-button');
 var standardBtn = document.querySelector('#standard-button');
 var foilBtn = document.querySelector('#foil-button');
 
-var cardDisplay = document.querySelector('#card-display');
-var cardCost = document.querySelector('#card-cost');
-
 var deckList = document.querySelector('#deck-list');
 var clearbtn = document.querySelector("#clearButton");
 
-clearbtn = document.querySelector("#clearButton")
-
 var newDeck = [];
 
-// button toggle functionality
+var usdStandardCost = '';
+var eurStandardCost = '';
+var usdFoilCost = '';
+var eurFoilCost = '';
+
+// set a prototype function to remove cards in the array later on
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
+
+// when the page is opened, function checks for an existing deck and prints it to the page if it exists
+function retrieveDeck() {
+    // checks if localStorage 'deck' exists
+    if (!localStorage.getItem('deck')) {
+        return;
+    }
+
+    // stores localStorage 'deck' in a variable and sorts it alphabetically
+    let oldDeck = JSON.parse(localStorage.getItem('deck'));
+    oldDeck.sort();
+    
+    let currentDeck = JSON.parse(localStorage.getItem('deck'));
+
+    // loops once for each item in oldDeck
+    for (let i = 0; i < oldDeck.length; i++) {
+        // creates new <li> with the name of the card at oldDeck[i]
+        let node = document.createTextNode("");
+        node = oldDeck[i];
+        let listItem = document.createElement("li");
+        listItem.classList.add('label', 'deletetext' + [i], 'bigPicture');
+        listItem.setAttribute("id", "Card" + [i]);
+        
+        var countCards = [i]
+        // prints card to the page
+        listItem.append(node);
+
+        let removeButtonEl = document.createElement('button');
+        removeButtonEl.textContent = 'Remove Card';
+        removeButtonEl.classList.add('button', 'deleteButton' + [i]);
+        deckList.append(listItem, removeButtonEl);
+
+        let cardButtonSinglei = document.querySelector('.deleteButton' + [i]);
+        let cardtextSinglei = document.querySelector('.deletetext' + [i]);
+
+        //Clears specific cards from array then clears them visual
+        cardButtonSinglei.addEventListener("click", function () {
+            currentDeck.remove(node);
+            localStorage.setItem('deck', JSON.stringify(currentDeck))
+            cardButtonSinglei.remove('button');
+            cardtextSinglei.textContent = ' ';
+        })
+    }
+
+    //Clears the whole deck and sets the array to blank
+    clearbtn.addEventListener("click", function () { 
+        var Deck = [];
+        localStorage.setItem('deck', JSON.stringify(Deck));
+
+        for (var i = 0; i < countCards; i++) {
+            var cardText = document.querySelector('.deletetext' + [i]);
+            document.querySelector('.deleteButton' + [i]).innerHTML = ' ';
+            cardText.textContent = ' ';
+            var ButtonText = document.querySelector('.deleteButton' + [i]);
+            ButtonText.remove('button');
+        }
+
+
+        cardText = document.querySelector('.deletetext' + countCards);
+        document.querySelector('.deleteButton' + countCards).innerHTML = ' ';
+        cardText.textContent = ' ';
+        ButtonText = document.querySelector('.deleteButton' + countCards);
+        ButtonText.remove('button');
+
+        cardPreview.src = "../images/mtgcardback.jpg";
+        cardCost.innerHTML = '';
+        usdStandardCost = '';
+        usdFoilCost = '';
+        eurStandardCost = '';
+        eurFoilCost = '';
+    }),
+
+    $('.bigPicture').on('click', function(){
+        var cardName = this.innerHTML;
+        var cardLocation = encodeURI(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`);
+
+        fetch(cardLocation, {
+            method: 'GET',
+            credentials: 'same-origin',
+            redirect: 'follow',
+            cache: 'reload'
+
+        }) .then(response => {
+              return response.json();
+
+        }) .then(data => {
+            cardPreview.src= data.image_uris.border_crop;
+
+            usdStandardCost = data.prices.usd;
+            usdFoilCost = data.prices.usd_foil;
+            eurStandardCost = data.prices.eur;
+            eurFoilCost = data.prices.eur_foil;
+
+            if(usdBtn.classList.contains("is-selected") && standardBtn.classList.contains("is-selected")) {
+                cardCost.innerHTML = "$" + data.prices.usd;
+            } else if(usdBtn.classList.contains("is-selected") && foilBtn.classList.contains("is-selected")) {
+                cardCost.innerHTML = "$" + data.prices.usd_foil;
+            } else if(eurBtn.classList.contains("is-selected") && standardBtn.classList.contains("is-selected")) {
+                cardCost.innerHTML = "€" + data.prices.eur;
+            } else if(eurBtn.classList.contains("is-selected") && foilBtn.classList.contains("is-selected")) {
+                cardCost.innerHTML = "€" + data.prices.eur_foil;
+            }
+
+            if(cardCost.innerHTML === "null" || cardCost.innerHTML === "$null" || cardCost.innerHTML === "€null") {
+                cardCost.innerHTML = "No price available";
+            }
+            
+        })
+    })
+};
+
+// usd/eur/standard/foilBtn change classes on click
 usdBtn.addEventListener('click', function() {
     if (!usdBtn.classList.contains("is-selected")) {
         eurBtn.classList.remove("is-selected");
@@ -23,6 +148,16 @@ usdBtn.addEventListener('click', function() {
         usdBtn.classList.add("is-selected");
         usdBtn.classList.remove("is-light");
         usdBtn.classList.add("is-dark");
+    }
+
+    if (standardBtn.classList.contains("is-selected")) {
+        cardCost.innerHTML = "$" + usdStandardCost;
+    } else {
+        cardCost.innerHTML = "$" + usdFoilCost;
+    }
+
+    if(cardCost.innerHTML === "null" || cardCost.innerHTML === "$null" || cardCost.innerHTML === "€null") {
+        cardCost.innerHTML = "No price available";
     }
 });
 
@@ -36,6 +171,16 @@ eurBtn.addEventListener('click', function() {
         eurBtn.classList.remove("is-light");
         eurBtn.classList.add("is-dark");
     }
+
+    if (standardBtn.classList.contains("is-selected")) {
+        cardCost.innerHTML = "€" + eurStandardCost;
+    } else {
+        cardCost.innerHTML = "€" + eurFoilCost;
+    }
+
+    if(cardCost.innerHTML === "null" || cardCost.innerHTML === "$null" || cardCost.innerHTML === "€null") {
+        cardCost.innerHTML = "No price available";
+    }
 });
 
 standardBtn.addEventListener('click', function() {
@@ -47,6 +192,16 @@ standardBtn.addEventListener('click', function() {
         standardBtn.classList.add("is-selected");
         standardBtn.classList.remove("is-light");
         standardBtn.classList.add("is-dark");
+    }
+
+    if (usdBtn.classList.contains("is-selected")) {
+        cardCost.innerHTML = "$" + usdStandardCost;
+    } else {
+        cardCost.innerHTML = "€" + eurStandardCost;
+    }
+
+    if(cardCost.innerHTML === "null" || cardCost.innerHTML === "$null" || cardCost.innerHTML === "€null") {
+        cardCost.innerHTML = "No price available";
     }
 });
 
@@ -60,110 +215,16 @@ foilBtn.addEventListener('click', function() {
         foilBtn.classList.remove("is-light");
         foilBtn.classList.add("is-dark");
     }
-});
 
-// when the page is opened, function checks for an existing deck and prints it to the page if it exists
-function retrieveDeck() {
-    // checks if localStorage 'deck' exists
-    if (!localStorage.getItem('deck')) {
-        localStorage.clear('deck');
+    if (usdBtn.classList.contains("is-selected")) {
+        cardCost.innerHTML = "$" + usdFoilCost;
+    } else {
+        cardCost.innerHTML = "€" + eurFoilCost;
     }
 
-    // stores localStorage 'deck' in a variable and sorts it alphabetically
-    let oldDeck = JSON.parse(localStorage.getItem('deck'));
-    oldDeck.sort();
-    console.log(oldDeck);
-    
-    let currentDeck = JSON.parse(localStorage.getItem('deck'));
-
-    // loops once for each item in oldDeck
-    for (let i = 0; i < oldDeck.length; i++) {
-        // creates new <li> with the name of the card at oldDeck[i]
-        let node = document.createTextNode("");
-        node = oldDeck[i];
-        let listItem = document.createElement("li");
-        listItem.classList.add('label', 'deletetext' + [i]);
-        listItem.setAttribute("id", "Card" + [i]);
-        
-        var countCards = [i];
-
-        // prints card to the page
-        listItem.append(node);
-
-        let removeButtonEl = document.createElement('button');
-        removeButtonEl.textContent = 'Remove Card';
-        removeButtonEl.classList.add('button', 'deleteButton' + [i]);
-        deckList.append(listItem, removeButtonEl);
-
-        let cardButtonSinglei = document.querySelector('.deleteButton' + [i]);
-        console.log("button" + [i]);
-        let cardtextSinglei = document.querySelector('.deletetext' + [i]);
-        console.log("text" + [i]);
-
-        cardButtonSinglei.addEventListener("click", function () {
-            console.log(currentDeck)
-
-            cardButtonSinglei.remove('button');
-            console.log("button" + [i]);
-            cardtextSinglei.textContent = ' ';
-            console.log("text" + [i]);
-        });
+    if(cardCost.innerHTML === "null" || cardCost.innerHTML === "$null" || cardCost.innerHTML === "€null") {
+        cardCost.innerHTML = "No price available";
     }
- 
-    clearbtn.addEventListener("click", function () { 
-        var Deck = []
-        localStorage.setItem('deck', JSON.stringify(Deck))
-        console.log(localStorage.getItem('deck'))
-        for (var i = 0; i < countCards; i++) {
-        var cardText = document.querySelector('.deletetext' + [i]);
-        document.querySelector('.deleteButton' + [i]).innerHTML = ' ';
-        cardText.textContent = ' ';
-        var ButtonText = document.querySelector('.deleteButton' + [i]);
-        ButtonText.remove('button');
-        }
-        cardText = document.querySelector('.deletetext' + countCards);
-        document.querySelector('.deleteButton' + countCards).innerHTML = ' ';
-        cardText.textContent = ' ';
-        ButtonText = document.querySelector('.deleteButton' + countCards);
-        ButtonText.remove('button');
-        console.log(localStorage.getItem('deck'));
-    }
-)};
-
-deckList.querySelector('li').addEventListener('click', function() {
-    var cardName = this.textContent;
-    var cardId = encodeURI(`https://api.scryfall.com/cards/named?fuzzy=${cardName}`);
-
-    fetch(cardId, {
-        method: 'GET',
-        credentials: 'same-origin',
-        redirect: 'follow',
-        cache: 'reload'
-        
-    }) .then (response => {
-        return response.json();
-
-    }) .then (data => {
-        var price = "";
-
-        if(usdBtn.classList.contains("is-selected") && standardBtn.classList.contains("is-selected")) {
-            price = data.prices.usd;
-        } else if(usdBtn.classList.contains("is-selected") && foilBtn.classList.contains("is-selected")) {
-            price = data.prices.usd_foil;
-        } else if(eurBtn.classList.contains("is-selected") && standardBtn.classList.contains("is-selected")) {
-            price = data.prices.eur;
-        } else if(eurBtn.classList.contains("is-selected") && foilBtn.classList.contains("is-selected")) {
-            price = data.prices.eur_foil;
-        }
-
-        cardDisplay.src = selected.image_uris.border_crop;
-        cardCost.textContent = price
-
-    }) .catch(error => {
-        console.error('Error:', error);
-
-    })
-    return;
 });
 
 retrieveDeck();

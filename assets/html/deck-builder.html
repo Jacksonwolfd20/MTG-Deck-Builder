@@ -38,12 +38,11 @@
                 </a>
           
                 <a class="navbar-item" href="https://media.wizards.com/2022/downloads/MagicCompRules%2020220708.pdf">
-                  Rulebook pdf
+                  Rulebook PDF
                 </a>
               </div>
-              </div>
             </div>
-          </nav>
+        </nav>
         
 
         <nav class="navbar" role="navigation">
@@ -54,23 +53,11 @@
             <div class="navbar-end">
                 <a class="button" href="Pricing.html">Pricing</a>
             </div>
-            
-            
-        </div>
         </nav>
-        <!------------------------------------------------------------------------------------------------------------------------------------------->
     </header>
 
     <!-- Search Bar Structure -->
-    <form class="box" id="search-box">
-        <label class="label">Search for a card, and add it to your deck!</label>
-        <div class="field">
-            <input class="input" type="text" placeholder="e.g. Krenko, Mob Boss" id="search-bar">
-        </div>
-
-        <button class="button is-success" id="search-button">Search</button>
-    </form>
-
+    
     <div class="columns">
         <!-- Card Preview Structure -->
         <div class="column is-4 is-offset-2">
@@ -79,7 +66,6 @@
                 <img class="" id="card-preview" src="../images/mtgcardback.jpg">
             </figure>
 
-            <!------------------------ <divs> SHOULD BE DISPLAYED INLINE ------------------------>
             <!-- buttons for USD or EUR pricing -->
             <div class="buttons has-addons">
                 <button class="button is-dark is-selected" id="usd-button">$USD</button>
@@ -90,24 +76,17 @@
                 <button class="button is-dark is-selected" id="standard-button">Standard</button>
                 <button class="button is-light" id="foil-button">Foil</button>
             </div>
-            <!----------------------------------------------------------------------------------->
 
-            <!----------- <p> AND <button> SHOULD BE DISPLAYED INLINE ----------->
             <!-- displays card price -->
-            <p class="content" id="card-cost">$0.00</p>
-            <!-- adds one copy of the currently selected card to the decklist -->
-            <button class="button is-success" id="add-button">Add Card</button>
-            <!------------------------------------------------------------------->
+            <p class="content" id="card-cost">0.00</p>
         </div>
 
         <!-- Deck List structure -->
         <div class="column is-3 is-offset-2">
             <h2 class="title">Deck List</h2>
             <ul id="deck-list">
-              
-              
             <ul>
-              <a id = "clearButton" class="button">Clear Deck</a>
+            <a id = "clearButton" class="button">Clear Deck</a>
         </div>
         
     </div>
