@@ -7,6 +7,7 @@ var standardBtn = document.querySelector('#standard-button');
 var foilBtn = document.querySelector('#foil-button');
 
 var deckList = document.querySelector('#deck-list');
+
 var clearbtn = document.querySelector("#clearButton");
 
 var newDeck = [];
@@ -15,6 +16,7 @@ var usdStandardCost = '';
 var eurStandardCost = '';
 var usdFoilCost = '';
 var eurFoilCost = '';
+
 
 // set a prototype function to remove cards in the array later on
 Array.prototype.remove = function() {
@@ -32,7 +34,11 @@ Array.prototype.remove = function() {
 function retrieveDeck() {
     // checks if localStorage 'deck' exists
     if (!localStorage.getItem('deck')) {
+
         return;
+
+        localStorage.clear('deck');
+
     }
 
     // stores localStorage 'deck' in a variable and sorts it alphabetically
@@ -47,7 +53,9 @@ function retrieveDeck() {
         let node = document.createTextNode("");
         node = oldDeck[i];
         let listItem = document.createElement("li");
+
         listItem.classList.add('label', 'deletetext' + [i], 'bigPicture');
+
         listItem.setAttribute("id", "Card" + [i]);
         
         var countCards = [i]
@@ -68,14 +76,18 @@ function retrieveDeck() {
             localStorage.setItem('deck', JSON.stringify(currentDeck))
             cardButtonSinglei.remove('button');
             cardtextSinglei.textContent = ' ';
+
         })
+
     }
+ 
+    
+
 
     //Clears the whole deck and sets the array to blank
     clearbtn.addEventListener("click", function () { 
         var Deck = [];
         localStorage.setItem('deck', JSON.stringify(Deck));
-
         for (var i = 0; i < countCards; i++) {
             var cardText = document.querySelector('.deletetext' + [i]);
             document.querySelector('.deleteButton' + [i]).innerHTML = ' ';
@@ -90,6 +102,10 @@ function retrieveDeck() {
         cardText.textContent = ' ';
         ButtonText = document.querySelector('.deleteButton' + countCards);
         ButtonText.remove('button');
+
+}
+)}
+
 
         cardPreview.src = "../images/mtgcardback.jpg";
         cardCost.innerHTML = '';
@@ -189,6 +205,7 @@ standardBtn.addEventListener('click', function() {
         foilBtn.classList.remove("is-dark");
         foilBtn.classList.add("is-light");
 
+
         standardBtn.classList.add("is-selected");
         standardBtn.classList.remove("is-light");
         standardBtn.classList.add("is-dark");
@@ -227,4 +244,91 @@ foilBtn.addEventListener('click', function() {
     }
 });
 
+
 retrieveDeck();
+
+/*
+// search function triggered by clicking the search button
+searchBtn.addEventListener('click', function() {
+    event.preventDefault();
+    responseEl.remove();
+    // grabs the user's input from the search box
+    var searchInput = searchBar.val().trim();
+    console.log(searchInput);
+    
+    // checks for a valid input
+    if (searchInput === '' || searchInput == 'undefined') {
+        console.log('No results found');
+        var responseEl = document.createElement('p');
+        responseEl.textContent = "Sorry, the card either couldn't be found or it doesn't exist. Please try again!"
+        searchBox.append(responseEl);
+    } else {
+        updateDisplay(searchInput);
+    }
+});
+// checks for user input and returns card image to the page
+function updateDisplay(searchInput) {
+    //
+    var cardId = encodeURI(`https://api.scryfall.com/cards/named?fuzzy=${searchInput}`);
+    fetch(cardId, {
+        method: 'GET',
+        credentials: 'same-origin',
+        redirect: 'follow',
+        cache: 'reload'
+    }) .then (response => {
+        return response.json();
+    }) .then (data => {
+        var cardArray = data;
+        var cardName = cardArray.name;
+        var marketId = cardArray.cardmarket_id
+        if (!cardName) {
+            console.log('No results found');
+            var responseEl = document.createElement('p');
+            responseEl.textContent = "Sorry, the card either couldn't be found or it doesn't exist. Please try again!"
+            searchBox.append(responseEl);
+        } else {
+            getCard(cardArray);
+        }
+    }) .catch(error => {
+        console.error('Error:', error);
+    })
+    return;
+};
+function getCard(cardArray) {
+    var cardImage = cardArray.image_uris.border_crop;
+    cardDisplay.src = cardImage;
+    var cardPriceUsd = cardArray.prices.usd;
+    var cardPriceUsdFoil = cardArray.prices.usd_foil;
+    var cardPriceEuro = cardArray.prices.eur;
+    var cardPriceEuroFoil = cardArray.prices.eur_foil;
+    if (
+};
+function allCardNames() {
+    //
+    var cardIdName = encodeURI(`https://api.scryfall.com/catalog/card-names`);
+  
+    fetch(cardIdName, {
+      method: 'GET',
+      credentials: 'same-origin',
+      redirect: 'follow',
+      cache: 'reload'
+    }) .then (response => {
+        return response.json();
+    }) .then (data => {
+        console.log(data);
+        cardNameAuto = data.data
+        searchBar.autocomplete({
+        maxResults: 10,
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(cardNameAuto, request.term);
+            response(results.slice(0, 10));
+            }
+        });
+    }) .catch (error => {
+        console.error('Error:', error);
+    });
+    return;
+};
+allCardNames();
+*/
+

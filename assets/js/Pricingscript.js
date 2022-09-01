@@ -17,7 +17,9 @@ var displayPriceEuroFoil = (" ")
 //Creates a Variable Outside of the code
 let cardNamesAuto = [];
 
+
 var exchangeRate = localStorage.getItem('Exchange');
+
 
 var Deck = [];
 
@@ -123,56 +125,55 @@ function getCardPrice(cardarray) {
   cardPriceUsd = cardarray.prices.usd
   cardPriceUsdFoil = cardarray.prices.usd_foil
 
-      console.log(exchangeRate)
-      cardPriceEuro = cardPriceUsd * exchangeRate;
-      cardPriceEuro = cardPriceEuro.toString();
-      cardPriceEuro = cardPriceEuro.substring(0,5);
+  var exchangeRate = localStorage.getItem('Exchange')
+  console.log(exchangeRate)
+  cardPriceEuro = cardPriceUsd * exchangeRate;
+  cardPriceEuro = cardPriceEuro.toString();
+  cardPriceEuro = cardPriceEuro.substring(0, 5);
 
-      cardPriceEuroFoil = cardPriceUsdFoil * exchangeRate;
-      cardPriceEuroFoil = cardPriceEuroFoil.toString();
-      cardPriceEuroFoil = cardPriceEuroFoil.substring(0,5);
-
-
-      //testing and applying definitions to be used later
-      if (cardPriceUsd === null && cardPriceUsdFoil === null) {
-
-        displayPriceUsd = ("Normal card price is unavailable")
-        displayPriceUsdFoil = ("Foil card price is unavailable")
-
-      } else if (cardPriceUsd && cardPriceUsdFoil === null) {
-        displayPriceUsd = (" $ " + cardPriceUsd + "~")
-        displayPriceUsdFoil = ("Foil card price is unavailable")
-      } else if (cardPriceUsd === null && cardPriceUsdFoil) {
-
-        displayPriceUsd = ("Normal card price is unavailable")
-
-        displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
-      } else {
-        displayPriceUsd = (" $ " + cardPriceUsd + "~")
-        displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
-      }
-
-      if (cardPriceEuro === null && cardPriceEuroFoil === null) {
-
-        displayPriceEuro = ("Normal card price is unavailable")
-        displayPriceEuroFoil = ("Foil card price is unavailable")
-      } else if (cardPriceEuro && cardPriceEuroFoil === null) {
-        displayPriceEuro = (" € " + cardPriceEuro + "~")
-        displayPriceEuroFoil = ("Foil card price is unavailable")
-      } else if (cardPriceEuro === null && cardPriceEuroFoil) {
-
-        displayPriceEuro = ("Normal card price is unavailable")
-
-        displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
-      } else {
-        displayPriceEuro = (" € " + cardPriceEuro + "~")
-        displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
-      }
-      //Prints cards
-      printCards(cardarray);
-    }
+  cardPriceEuroFoil = cardPriceUsdFoil * exchangeRate;
+  cardPriceEuroFoil = cardPriceEuroFoil.toString();
+  cardPriceEuroFoil = cardPriceEuroFoil.substring(0, 5);
 
 
+  //testing and applying definitions to be used later
+  if (cardPriceUsd === null && cardPriceUsdFoil === null) {
+
+    displayPriceUsd = ("Normal card price is unavailable")
+    displayPriceUsdFoil = ("Foil card price is unavailable")
+
+  } else if (cardPriceUsd && cardPriceUsdFoil === null) {
+    displayPriceUsd = (" $ " + cardPriceUsd + "~")
+    displayPriceUsdFoil = ("Foil card price is unavailable")
+  } else if (cardPriceUsd === null && cardPriceUsdFoil) {
+
+    displayPriceUsd = ("Normal card price is unavailable")
+
+    displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
+  } else {
+    displayPriceUsd = (" $ " + cardPriceUsd + "~")
+    displayPriceUsdFoil = (" $ " + cardPriceUsdFoil + "~")
+  }
+
+  if (cardPriceEuro === null && cardPriceEuroFoil === null) {
+
+    displayPriceEuro = ("Normal card price is unavailable")
+    displayPriceEuroFoil = ("Foil card price is unavailable")
+  } else if (cardPriceEuro && cardPriceEuroFoil === null) {
+    displayPriceEuro = (" € " + cardPriceEuro + "~")
+    displayPriceEuroFoil = ("Foil card price is unavailable")
+  } else if (cardPriceEuro === null && cardPriceEuroFoil) {
+
+    displayPriceEuro = ("Normal card price is unavailable")
+
+    displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
+  } else {
+    displayPriceEuro = (" € " + cardPriceEuro + "~")
+    displayPriceEuroFoil = (" € " + cardPriceEuroFoil + "~")
+  }
+  //Prints cards
+  printCards(cardarray);
+}
 
 
 //function to print all the info to the screen
@@ -226,22 +227,19 @@ function printCards(cardarray) {
   linkButtonEl.textContent = 'Add To Deck List';
   linkButtonEl.classList.add('button');
 
-  var progress = document.querySelector("#progress");
-  var progressLength = JSON.parse(localStorage.getItem('deck'));
+  
   linkButtonEl.addEventListener("click", function () {
     event.preventDefault();
-    progress.setAttribute("value", progressLength.length);
+    
     if (localStorage.getItem('deck') === null) {
       var Deck = []
       localStorage.setItem('deck', JSON.stringify(Deck))
-      progressLength = JSON.parse(localStorage.getItem('deck'));
-      progress.setAttribute("value", progressLength.length);
+
     }
     var obj = JSON.parse(localStorage.getItem('deck'));
     if (obj.length > 99) {
       modal.classList.add('is-active');
-      progressLength = JSON.parse(localStorage.getItem('deck'));
-      progress.setAttribute("value", progressLength.length);
+
     } else if (obj.includes(cardarray.name)) {
       if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land")) {
         var Deck = JSON.parse(localStorage.getItem('deck'));
@@ -253,8 +251,7 @@ function printCards(cardarray) {
 
         modal.classList.add('is-active');
         alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
-        progressLength = JSON.parse(localStorage.getItem('deck'));
-        progress.setAttribute("value", progressLength.length);
+
 
       }
     } else {
@@ -305,4 +302,6 @@ function allCardNames() {
   return;
 }
 
+
 allCardNames();
+
