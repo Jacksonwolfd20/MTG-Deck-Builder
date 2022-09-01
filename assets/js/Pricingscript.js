@@ -19,7 +19,8 @@ let cardNamesAuto = [];
 
 var Deck = [];
 
-localStorage.setItem('deck', JSON.stringify(Deck))
+var cardPriceFinal = 0
+
 
 
 // Pulls from local storage to display the first card
@@ -58,7 +59,7 @@ searchbtn.addEventListener("click", function () {
   //Verify a Card Name was entered
   if (searchinput === "" || searchinput == "undefined") {
     modal.classList.add('is-active');
-    alertMessege.textContent = ("Sorry The Card Either Cant Be Found Or It Doesnt Exist Please Try Again")
+    alertMessege.textContent = ("Sorry You Must Enter A Card for the site to work");
   } else {
     // Switches the spaces with + symbol
     searchinput = additionSymbolAdd(searchinput);
@@ -137,6 +138,7 @@ function cardInput(searchinput) {
         //img creator
         cardImgcreator(cardarray);
 
+        
       }
     })
   return;
@@ -253,23 +255,30 @@ function printCards(cardarray) {
 
 
   linkButtonEl.addEventListener("click", function () {
-
-    localStorage.setItem('deck', JSON.stringify(Deck))
+    event.preventDefault();
+    console.log(localStorage.getItem('deck'))
+    if(localStorage.getItem('deck') === null){
+      var Deck = []
+        localStorage.setItem('deck', JSON.stringify(Deck))
+    }
     var obj = JSON.parse(localStorage.getItem('deck'));
-
+    console.log(localStorage.getItem('deck'))
     if (obj.length > 99) {
       console.log("To Big")
       modal.classList.add('is-active');
     } else if (obj.includes(cardarray.name) ) {
-      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land") || cardarray.name.startsWith("Dragon's Approach" || cardarray.name.startsWith("Persistent Petitioners") || cardarray.name.startsWith("Rat Colony")|| cardarray.name.startsWith("Relentless Rats") || cardarray.name.startsWith("Shadowborn Apostle"))){
+      if (cardarray.type_line.startsWith("Basic Land") || cardarray.type_line.startsWith("Basic Snow Land") ){
+        var Deck = JSON.parse(localStorage.getItem('deck'));
         Deck.push(cardarray.name);//Add the text 'item1' to Deck
         localStorage.setItem('deck', JSON.stringify(Deck))
         obj = JSON.parse(localStorage.getItem('deck'));
         console.log(obj)
       }else{
         modal.classList.add('is-active');
+        alertMessege.textContent = ("Sorry Commander is a singleton format which means you can only have 1 of each card exception is basic lands");
       }
     } else {
+      var Deck = JSON.parse(localStorage.getItem('deck'));
       Deck.push(cardarray.name);//Add the text 'item1' to Deck
       localStorage.setItem('deck', JSON.stringify(Deck))
       obj = JSON.parse(localStorage.getItem('deck'));
