@@ -18,6 +18,10 @@ body {
     background-color: #fffdd0;
 }
 
+#card-cost {
+    color: #fffdd0;
+}
+
 /* NAV BAR */
 .navbar {
     background-color: rgb(97, 73, 65);

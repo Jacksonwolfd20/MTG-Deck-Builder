@@ -4,6 +4,10 @@ var modal = document.querySelector('#modalBox');
 var modalCloseBtn = document.querySelector('#modalClose');
 var searchField = document.querySelector('#searchBar');
 
+var exchangeRate = 0
+
+onePrice();
+
 //Search button functionality
 searchBtn.addEventListener('click', function() {
 
@@ -37,6 +41,29 @@ searchBtn.addEventListener('click', function() {
     }
     
 });
+
+function onePrice(){
+
+  if (exchangeRate === 0){
+  var myHeaders = new Headers();
+  myHeaders.append("apikey", "HPdzHjiZDnilLjcBgTXzY4PkDB5TGLYf");
+
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow',
+    headers: myHeaders
+  };
+
+  fetch("https://api.apilayer.com/currency_data/live?source=USD&currencies=EUR", requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+    exchangeRate = data.quotes.USDEUR
+
+    localStorage.setItem('Exchange', exchangeRate)
+    })}
+  
+}
+
 
 // modal close button functionality
 modalCloseBtn.addEventListener('click', function() {
