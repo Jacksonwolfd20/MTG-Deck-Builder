@@ -18,6 +18,17 @@ var clearbtn = document.querySelector("#clearButton")
 
 var newDeck = [];
 
+// set a prototype function to remove cards in the array later on
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 // when the page is opened, function checks for an existing deck and prints it to the page if it exists
 function retrieveDeck() {
@@ -31,34 +42,35 @@ function retrieveDeck() {
     oldDeck.sort();
     console.log(oldDeck);
     
+    let currentDeck = JSON.parse(localStorage.getItem('deck'));
+
     // loops once for each item in oldDeck
-    for (var i = 0; i < oldDeck.length; i++) {
+    for (let i = 0; i < oldDeck.length; i++) {
         // creates new <li> with the name of the card at oldDeck[i]
-        var node = document.createTextNode("");
+        let node = document.createTextNode("");
         node = oldDeck[i];
-        var listItem = document.createElement("li");
+        let listItem = document.createElement("li");
         listItem.classList.add('label', 'deletetext' + [i]);
         listItem.setAttribute("id", "Card" + [i]);
-        var RemoveButton = document.createElement("button");
+        
         var countCards = [i]
         // prints card to the page
         listItem.append(node);
 
-        var removeButtonEl = document.createElement('button');
+        let removeButtonEl = document.createElement('button');
         removeButtonEl.textContent = 'Remove Card';
         removeButtonEl.classList.add('button', 'deleteButton' + [i]);
         deckList.append(listItem, removeButtonEl);
 
-        var cardButtonSinglei = document.querySelector('.deleteButton' + [i]);
-        console.log("button" + [i])
-        var cardtextSinglei = document.querySelector('.deletetext' + [i]);
-        console.log("text" + [i])
+        let cardButtonSinglei = document.querySelector('.deleteButton' + [i]);
+        let cardtextSinglei = document.querySelector('.deletetext' + [i]);
 
+        //Clears specific cards from array then clears them visual
         cardButtonSinglei.addEventListener("click", function () {
+            currentDeck.remove(node);
+            localStorage.setItem('deck', JSON.stringify(currentDeck))
             cardButtonSinglei.remove('button');
-            console.log("button" + [i])
             cardtextSinglei.textContent = ' ';
-            console.log("text" + [i])
          })
 
     }
@@ -67,11 +79,10 @@ function retrieveDeck() {
 
     
 
-
+    //Clears the whole deck and sets the array to blank
     clearbtn.addEventListener("click", function () { 
         var Deck = []
         localStorage.setItem('deck', JSON.stringify(Deck))
-        console.log(localStorage.getItem('deck'))
         for (var i = 0; i < countCards; i++) {
         var cardText = document.querySelector('.deletetext' + [i]);
         document.querySelector('.deleteButton' + [i]).innerHTML = ' ';
@@ -84,7 +95,6 @@ function retrieveDeck() {
         cardText.textContent = ' ';
         ButtonText = document.querySelector('.deleteButton' + countCards);
         ButtonText.remove('button');
-        console.log(localStorage.getItem('deck'));
 }
 )}
 
