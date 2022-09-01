@@ -28,9 +28,8 @@ function firstSearch() {
 
   var searchinput = localStorage.getItem('indexSearch')
 
-
-
   cardInput(searchinput);
+
 }
 
 firstSearch()
@@ -109,7 +108,9 @@ function cardInput(searchinput) {
 
       }
     })
+
   return;
+  
 }
 
 function getCardPrice(cardarray) {
@@ -210,7 +211,9 @@ function printCards(cardarray) {
       progressLength = JSON.parse(localStorage.getItem('deck'));
       progress.setAttribute("value", progressLength.length);
     }
+    
     var obj = JSON.parse(localStorage.getItem('deck'));
+
     if (obj.length > 99) {
       modal.classList.add('is-active');
       progressLength = JSON.parse(localStorage.getItem('deck'));

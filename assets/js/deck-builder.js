@@ -40,7 +40,6 @@ function retrieveDeck() {
     // stores localStorage 'deck' in a variable and sorts it alphabetically
     let oldDeck = JSON.parse(localStorage.getItem('deck'));
     oldDeck.sort();
-    console.log(oldDeck);
     
     let currentDeck = JSON.parse(localStorage.getItem('deck'));
 
@@ -75,10 +74,6 @@ function retrieveDeck() {
 
     }
  
-    
-
-    
-
     //Clears the whole deck and sets the array to blank
     clearbtn.addEventListener("click", function () { 
         var Deck = []
@@ -98,90 +93,4 @@ function retrieveDeck() {
 }
 )}
 
-
 retrieveDeck();
-
-/*
-// search function triggered by clicking the search button
-searchBtn.addEventListener('click', function() {
-    event.preventDefault();
-    responseEl.remove();
-    // grabs the user's input from the search box
-    var searchInput = searchBar.val().trim();
-    console.log(searchInput);
-    
-    // checks for a valid input
-    if (searchInput === '' || searchInput == 'undefined') {
-        console.log('No results found');
-        var responseEl = document.createElement('p');
-        responseEl.textContent = "Sorry, the card either couldn't be found or it doesn't exist. Please try again!"
-        searchBox.append(responseEl);
-    } else {
-        updateDisplay(searchInput);
-    }
-});
-// checks for user input and returns card image to the page
-function updateDisplay(searchInput) {
-    //
-    var cardId = encodeURI(`https://api.scryfall.com/cards/named?fuzzy=${searchInput}`);
-    fetch(cardId, {
-        method: 'GET',
-        credentials: 'same-origin',
-        redirect: 'follow',
-        cache: 'reload'
-    }) .then (response => {
-        return response.json();
-    }) .then (data => {
-        var cardArray = data;
-        var cardName = cardArray.name;
-        var marketId = cardArray.cardmarket_id
-        if (!cardName) {
-            console.log('No results found');
-            var responseEl = document.createElement('p');
-            responseEl.textContent = "Sorry, the card either couldn't be found or it doesn't exist. Please try again!"
-            searchBox.append(responseEl);
-        } else {
-            getCard(cardArray);
-        }
-    }) .catch(error => {
-        console.error('Error:', error);
-    })
-    return;
-};
-function getCard(cardArray) {
-    var cardImage = cardArray.image_uris.border_crop;
-    cardDisplay.src = cardImage;
-    var cardPriceUsd = cardArray.prices.usd;
-    var cardPriceUsdFoil = cardArray.prices.usd_foil;
-    var cardPriceEuro = cardArray.prices.eur;
-    var cardPriceEuroFoil = cardArray.prices.eur_foil;
-    if (
-};
-function allCardNames() {
-    //
-    var cardIdName = encodeURI(`https://api.scryfall.com/catalog/card-names`);
-  
-    fetch(cardIdName, {
-      method: 'GET',
-      credentials: 'same-origin',
-      redirect: 'follow',
-      cache: 'reload'
-    }) .then (response => {
-        return response.json();
-    }) .then (data => {
-        console.log(data);
-        cardNameAuto = data.data
-        searchBar.autocomplete({
-        maxResults: 10,
-        source: function(request, response) {
-            var results = $.ui.autocomplete.filter(cardNameAuto, request.term);
-            response(results.slice(0, 10));
-            }
-        });
-    }) .catch (error => {
-        console.error('Error:', error);
-    });
-    return;
-};
-allCardNames();
-*/
