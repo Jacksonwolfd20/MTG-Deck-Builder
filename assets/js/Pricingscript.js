@@ -44,9 +44,6 @@ closeButton.addEventListener("click", function () {
   modal.classList.remove("is-active");
 })
 
-
-
-
 //adds search functionality
 searchbtn.addEventListener("click", function () {
   event.preventDefault();
@@ -71,13 +68,8 @@ searchbtn.addEventListener("click", function () {
     }
   }
 
-
 }
 );
-
-
-
-
 
 //Gets card shop info
 function cardInput(searchinput) {
@@ -114,8 +106,6 @@ function cardInput(searchinput) {
 
         //Adds Showing of Results 
         resultTextEl.textContent = (" " + cardRealName);
-
-
 
       }
     })
@@ -175,8 +165,6 @@ function printCards(cardarray) {
 
   titleEl.textContent = cardarray.name;
 
-
-
   var bodyContentEl = document.createElement('p');
   bodyContentEl.innerHTML =
     '<strong>Card Type:</strong> ' + cardarray.type_line + '<br/>';
@@ -206,8 +194,6 @@ function printCards(cardarray) {
   img.src = cardarray.image_uris.border_crop;
   img.width = "250";
   img.height = "100";
-
-
 
   var linkButtonEl = document.createElement('a');
   linkButtonEl.textContent = 'Add To Deck List';
@@ -252,7 +238,6 @@ function printCards(cardarray) {
       progressLength = JSON.parse(localStorage.getItem('deck'));
       progress.setAttribute("value", progressLength.length);
 
-
     }
 
   })
@@ -261,8 +246,6 @@ function printCards(cardarray) {
 
   resultContentEl.append(resultCard);
 }
-
-
 
 //Work in progress--
 function allCardNames() {
